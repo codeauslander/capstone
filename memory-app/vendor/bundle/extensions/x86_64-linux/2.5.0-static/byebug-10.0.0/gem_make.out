@@ -1,0 +1,19 @@
+current directory: /home/u/Actualize/capstone/memoryApp/vendor/bundle/gems/byebug-10.0.0/ext/byebug
+/home/u/.rbenv/versions/2.5.0/bin/ruby -r ./siteconf20180211-9171-1yv0ngv.rb extconf.rb
+creating Makefile
+
+current directory: /home/u/Actualize/capstone/memoryApp/vendor/bundle/gems/byebug-10.0.0/ext/byebug
+make "DESTDIR=" clean
+
+current directory: /home/u/Actualize/capstone/memoryApp/vendor/bundle/gems/byebug-10.0.0/ext/byebug
+make "DESTDIR="
+compiling breakpoint.c
+compiling byebug.c
+compiling context.c
+compiling locker.c
+compiling threads.c
+linking shared-object byebug/byebug.so
+
+current directory: /home/u/Actualize/capstone/memoryApp/vendor/bundle/gems/byebug-10.0.0/ext/byebug
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 byebug.so ./.gem.20180211-9171-1j9glxj/byebug

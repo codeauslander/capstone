@@ -1,0 +1,15 @@
+current directory: /home/u/Actualize/capstone/memoryApp/vendor/bundle/gems/websocket-driver-0.6.5/ext/websocket-driver
+/home/u/.rbenv/versions/2.5.0/bin/ruby -r ./siteconf20180211-9171-121jvqk.rb extconf.rb
+creating Makefile
+
+current directory: /home/u/Actualize/capstone/memoryApp/vendor/bundle/gems/websocket-driver-0.6.5/ext/websocket-driver
+make "DESTDIR=" clean
+
+current directory: /home/u/Actualize/capstone/memoryApp/vendor/bundle/gems/websocket-driver-0.6.5/ext/websocket-driver
+make "DESTDIR="
+compiling websocket_mask.c
+linking shared-object websocket_mask.so
+
+current directory: /home/u/Actualize/capstone/memoryApp/vendor/bundle/gems/websocket-driver-0.6.5/ext/websocket-driver
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 websocket_mask.so ./.gem.20180211-9171-1y01z30
