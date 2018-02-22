@@ -12,7 +12,7 @@ def create
 end
 def show
   @image = Image.find(params[:id])
-  render json:@image.as_json
+  render 'show.json.jbuilder'
 end
 def update
   @image = Image.find(params[:id])

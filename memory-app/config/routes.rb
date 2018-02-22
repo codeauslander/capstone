@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   delete '/tags/:id' => 'tags#destroy'
 
   get '/game_images' => 'game_images#index'
+  patch '/game_images/:id' => 'game_images#update'
 
 
 end

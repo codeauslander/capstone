@@ -8,7 +8,7 @@ class GameImagesController < ApplicationController
   #     )
   # end
   def index
-    @game_images = GameImage.all
+    @game_images = GameImage
     # search = params[:search].to_i
     # p search
 
@@ -17,11 +17,18 @@ class GameImagesController < ApplicationController
     #   images_ids = @game_images.map{|game_image| game_image.image_id}
     #   @images = Image.all.where("id in ?",images_ids)
     #   render json:@game_images.as_json
+
     # end
-    render json:@game_images.as_json
+    
+    render 'index.json.jbuilder'
   end
   def show
     @game_image = GameImage.find(params[:id])
     render json:@game_image
+  end
+  def update
+    @game_image = GameImage.find(params[:id])
+    @game_image.update(status: params[:status])
+    render json:@game_image.as_json
   end
 end

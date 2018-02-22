@@ -3,29 +3,35 @@ class GamesController < ApplicationController
     @games = current_user.games
     render json:@games.as_json
   end
+
   def create
     @game = Game.create(
         user_id: current_user.id , 
+        # user_id: 0 , 
         # done:params[:done], 
         done:false, 
         rows:params[:rows], 
         columns:params[:columns],
-        score: params[:score]
+        score: 0
       )
     images_by_tag = Tag.find_by(name:"ski_jumping").images
-    @deck = create_deck(images_by_tag)
-    @deck.length.times do |index|
-      GameImage.create(status:"normal",image_id:@deck[index].id,game_id:@game.id)
+    deck = create_deck(images_by_tag)
+    puts "deck #{deck}"
+    2.times do 
+      deck.each do |image|
+        p GameImage.create(status: "normal", image_id: image.id, game_id: @game.id)
+
+      end
     end
-    @images = @game.images
-    @game_images = @game.game_images
-    # render json:@game.as_json
+    
+
     render 'show.json.jbuilder'
   end
 
   def show
     @game = Game.find(params[:id])
-    render json:@game.as_json
+    @game.update_flipped
+    render 'show.json.jbuilder'
   end
 
   #continue game
@@ -43,10 +49,12 @@ class GamesController < ApplicationController
 
   private
   def create_deck(images_by_tag)
-    last_index = images_by_tag.length - 1
+    # last_index = images_by_tag.length - 1
+    # last_index = 9 if last_index > 9
+    last_index = 2
     deck = []
     indexes = (0..last_index).to_a.shuffle
-    10.times do
+    (last_index + 1).times do
       index = indexes.pop || 0
       deck << images_by_tag[index]
     end
@@ -55,3 +63,4 @@ class GamesController < ApplicationController
 
 
 end
+  
