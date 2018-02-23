@@ -13,7 +13,7 @@ class Game < ApplicationRecord
         flip_images.update_all(status:"viewed")
       end
     end
-    done = is_winner
+    self.done = is_winner
   end
 
   def is_winner

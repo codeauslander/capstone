@@ -1,23 +1,23 @@
 class TagsController < ApplicationController
   def index
     @tags = Tag.all
-    render json:@tags.as_json
+    render 'index.json.jbuilder'
   end
   def create
     @tag = Tag.create(
         name:params[:name]
       )
-    render json:@tag.as_json
+    render 'show.json.jbuilder'
   end
   def show
     @tag = Tag.find(params[:id])
-    render json:@tag.as_json
+    render 'show.json.jbuilder'
   end
   def update
     @tag = Tag.find(params[:id])
     @tag.name = params[:name] || @tag.name
     @tag.save
-    render json:@tag.as_json
+    render 'show.json.jbuilder'
   end
   def destroy
     @tag = Tag.find(params[:id])

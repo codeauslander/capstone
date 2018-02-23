@@ -2,13 +2,13 @@ class ImagesController < ApplicationController
   
 def index
   @images = Image.all 
-  render json:@images.as_json
+  render 'index.json.jbuilder'
 end
 def create
   @image = Image.create(
       image_url:params[:image_url]
     )
-  render json:@image.as_json
+  render 'show.json.jbuilder'
 end
 def show
   @image = Image.find(params[:id])
@@ -17,8 +17,9 @@ end
 def update
   @image = Image.find(params[:id])
   @image.image_url = params[:image_url] || @image.image_url
+  @image.name = params[:name] || @image.name
   @image.save
-  render json:@image.as_json
+  render 'show.json.jbuilder'
 end
 def destroy
   @image = Image.find(params[:id])

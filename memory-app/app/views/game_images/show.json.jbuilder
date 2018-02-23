@@ -1,0 +1,1 @@
+json.partial! @game_image, partial: "game_image", as: :game_image

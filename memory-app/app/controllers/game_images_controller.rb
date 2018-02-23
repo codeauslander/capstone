@@ -1,34 +1,29 @@
 class GameImagesController < ApplicationController
-  # def create
-  #   game_id = Game.all.each{|game| game.id if game.done == false}
-  #   image_id = Image.all.each{|img| image.tag == "rock"}
-  #   @game_image = GameImages.new(
-  #       game_id:game_id,
-  #       image_id:image_id
-  #     )
-  # end
   def index
-    @game_images = GameImage
-    # search = params[:search].to_i
-    # p search
-
-    # if search
-    #   @game_images = @game_images.where("game_id = ?",search)
-    #   images_ids = @game_images.map{|game_image| game_image.image_id}
-    #   @images = Image.all.where("id in ?",images_ids)
-    #   render json:@game_images.as_json
-
-    # end
-    
+    @game_images = GameImage.all
     render 'index.json.jbuilder'
+  end
+  def create
+    @game_image = GameImages.new(
+        game_id: params[:game_id],
+        image_id: params[:image_id],
+        status: params[:status]
+      )
+    @game_image.save
+    render 'show.json.jbuilder'
   end
   def show
     @game_image = GameImage.find(params[:id])
-    render json:@game_image
+    render 'show.json.jbuilder'
   end
   def update
     @game_image = GameImage.find(params[:id])
     @game_image.update(status: params[:status])
-    render json:@game_image.as_json
+    render 'show.json.jbuilder'
+  end
+  def destroy
+    game_image = GameImage.find(params[:id])
+    game_image.destroy
+    render json:{message:"Succesfully destroyed game_image ##{game_image.id}."}
   end
 end

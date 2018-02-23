@@ -109,10 +109,9 @@ class Frontend
         parameters[:columns] = 2
         game = Unirest.post("http://localhost:3000/games",parameters:parameters)
         game_hash = game.body
-        puts "game_hash #{game_hash["id"]}"
-        play(game_hash)
-        puts JSON.pretty_generate(game_hash) 
+        puts JSON.pretty_generate(game_hash)
        
+        play(game_hash)       
       when "i1"
         response = Unirest.get("http://localhost:3000/images")
         data = response.body

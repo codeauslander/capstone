@@ -1,2 +1,2 @@
-json.array! @games, partial:"game", as: :game
+json.array! @games, partial: "game", as: :game
 

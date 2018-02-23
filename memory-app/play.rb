@@ -26,6 +26,12 @@ module Play
     end
     puts "" 
   end
+  def winner(parameters)
+    game_id = parameters[:game_id]
+    response = Unirest.get("http://localhost:3000/games/#{game_id}")
+    data = response.body
+    data["done"]
+  end
   def play(game_hash)
 
     while true
@@ -35,14 +41,12 @@ module Play
       print 'guess: '
       guess_id = gets.chomp
       flip = Unirest.patch("http://localhost:3000/game_images/#{guess_id}", parameters:{status:"flipped"})
-
-      show_board({game_id: game_hash["id"]})
-
-      exit if gets.chomp == "q"
-      if game_hash["done"] == "true"
-        puts "You are a winner"
+      
+      exit if gets.chomp == "q" 
+      if winner({game_id: game_hash["id"]})
+        puts "Winner" 
         exit
-      end
+      end  
     end
   end
 end
