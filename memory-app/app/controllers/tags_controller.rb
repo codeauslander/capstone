@@ -16,6 +16,7 @@ class TagsController < ApplicationController
   def update
     @tag = Tag.find(params[:id])
     @tag.name = params[:name] || @tag.name
+    @tag.add_images(params[:image_ids]) if params[:image_ids]
     @tag.save
     render 'show.json.jbuilder'
   end

@@ -17,3 +17,5 @@ json.game_images game.game_images.order(:id).each do |game_image|
     json.name game_image.image.name
   end
 end
+
+json.actual_score game.actual_score

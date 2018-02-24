@@ -2,7 +2,7 @@ class GamesController < ApplicationController
   before_action :authenticate_user, only: [:index]
 
   def index
-    @games = current_user.games
+    @games = current_user.games.last(11)
     render 'index.json.jbuilder'
   end
   def create

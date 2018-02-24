@@ -8,20 +8,20 @@ class Frontend
   # include Board
   include Play
   def run
-    puts "Login in"
-    auth = {}
-    print "Email: "
-    auth[:email] = "a@gmail.com"
-    print "Password: "
-    auth[:password] = "password"
-    response = Unirest.post("http://localhost:3000/user_token",parameters:{
-        auth:auth
-      })
-    data = response.body
-    puts JSON.pretty_generate(data)
-    jwt = data["jwt"]
-    Unirest.default_header("Authorization","Bearer #{jwt}")
-    user_email = "Welcome user: #{auth[:email]}"
+    # puts "Login in"
+    # auth = {}
+    # print "Email: "
+    # auth[:email] = "a@gmail.com"
+    # print "Password: "
+    # auth[:password] = "password"
+    # response = Unirest.post("http://localhost:3000/user_token",parameters:{
+    #     auth:auth
+    #   })
+    # data = response.body
+    # puts JSON.pretty_generate(data)
+    # jwt = data["jwt"]
+    # Unirest.default_header("Authorization","Bearer #{jwt}")
+    # user_email = "Welcome user: #{auth[:email]}"
 
     # system 'clear'
     running = true
@@ -37,6 +37,10 @@ class Frontend
         [2] Login
         [3] Logout
         [4] Play"
+
+      puts "Game options
+      Select an option
+      [g1] Show all"
 
       puts "Image options
       Select an option
@@ -111,7 +115,12 @@ class Frontend
         game_hash = game.body
         puts JSON.pretty_generate(game_hash)
        
-        play(game_hash)       
+        play(game_hash)  
+
+      when "g1"
+        response = Unirest.get("http://localhost:3000/games")
+        data = response.body
+        puts JSON.pretty_generate(data)         
       when "i1"
         response = Unirest.get("http://localhost:3000/images")
         data = response.body
@@ -134,11 +143,24 @@ class Frontend
         print "id: "
         id = gets.chomp
         image = Unirest.get("http://localhost:3000/images/#{id}").body
-        print "image_url (#{image["id"]}): "
+        print "image_url (#{image["image_url"]}): "
         parameters[:image_url] = gets.chomp
+        print "name (#{image["name"]}): "
+        parameters[:name] = gets.chomp
+
+        tags = Unirest.get("http://localhost:3000/tags")
+        tags_data = tags.body
+        puts JSON.pretty_generate(tags_data)
+
+        print "Add tags by id: "
+        parameters[:tag_ids] = gets.chomp
+        parameters.delete_if { |key, value| value.empty? }
+
         response = Unirest.patch("http://localhost:3000/images/#{id}",parameters:parameters)
+
         data = response.body
-        puts JSON.pretty_generate(data)
+        puts JSON.pretty_generate(data) 
+
       when "i5"
         print "id: "
         id = gets.chomp
@@ -168,8 +190,18 @@ class Frontend
         id = gets.chomp
         tag = Unirest.get("http://localhost:3000/tags/#{id}").body
         print "name (#{tag["name"]}): "
-        name = gets.chomp
-        response = Unirest.patch("http://localhost/tags",parameters:parameters)
+        parameters[:name] = gets.chomp
+
+        images_response = Unirest.get("http://localhost:3000/images")
+        images_data = images_response.body
+        puts JSON.pretty_generate(images_data)
+
+        print "Add images by id: "
+        parameters[:image_ids] = gets.chomp
+        parameters.delete_if { |key, value| value.empty? }
+
+        response = Unirest.patch("http://localhost:3000/tags/#{id}",parameters:parameters)
+
         data = response.body
         puts JSON.pretty_generate(data)
       when "t5"
