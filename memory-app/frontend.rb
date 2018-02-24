@@ -1,27 +1,27 @@
 require 'unirest'
 require 'paint'
 require_relative 'play'
-# require_relative 'board'
+require_relative 'board'
 # require 'catpix'
 
 class Frontend
   # include Board
   include Play
   def run
-    # puts "Login in"
-    # auth = {}
-    # print "Email: "
-    # auth[:email] = "a@gmail.com"
-    # print "Password: "
-    # auth[:password] = "password"
-    # response = Unirest.post("http://localhost:3000/user_token",parameters:{
-    #     auth:auth
-    #   })
-    # data = response.body
-    # puts JSON.pretty_generate(data)
-    # jwt = data["jwt"]
-    # Unirest.default_header("Authorization","Bearer #{jwt}")
-    # user_email = "Welcome user: #{auth[:email]}"
+    puts "Login in"
+    auth = {}
+    print "Email: "
+    auth[:email] = "a@gmail.com"
+    print "Password: "
+    auth[:password] = "password"
+    response = Unirest.post("http://localhost:3000/user_token",parameters:{
+        auth:auth
+      })
+    data = response.body
+    puts JSON.pretty_generate(data)
+    jwt = data["jwt"]
+    Unirest.default_header("Authorization","Bearer #{jwt}")
+    user_email = "Welcome user: #{auth[:email]}"
 
     # system 'clear'
     running = true
@@ -223,90 +223,5 @@ class Frontend
     end
   end
 end
-
-# def play(parameters)
-#   game_hash = parameters[:game_hash]
-
-#   parameters_images_board = {}
-#   parameters_images_board[:rows] = game_hash["rows"]
-#   parameters_images_board[:columns] = game_hash["columns"]
-#   parameters_images_board[:images] = game_hash["images"]
-#   parameters_images_board[:game_images] = game_hash["game_images"]
-#   images_board = Images_board.new(parameters_images_board).board
-
-#   parameters_board = {}
-#   parameters_board[:images_board] = images_board
-#   # p images_board
-#   board = Board.new(parameters_board)
-#   board.show_board({type:"raw"})
-  
-#   running = true
-#     puts "Game"
-#     puts "Force your brain, Welcome!
-#         Look to the board and remember"
-#     board.show_board({type:"normal"})
-#   while running
-#     puts "Select a image (two letters) and find its pair "
-#     board.show_board({type:"hidden"})
-#     print "Select your first row"
-#     first_row = gets.chomp.to_i
-#     print "Select your first column"
-#     first_column = gets.chomp.to_i
-#     board.board[first_row][first_column]["status"] = "show"
-
-#     puts "Select second image (two letters) to compare "
-#     board.show_board({type:"hidden"})
-#     print "Select your second row"
-#     second_row = gets.chomp.to_i
-#     print "Select your second column"
-#     second_column = gets.chomp.to_i
-#     board.board[second_row][second_column]["status"] = "show"
-
-#     if board.board[first_row][first_column]["id"] == board.board[second_row][second_column]["id"]
-#       puts "Good memory!!!"
-#     else
-#       board.board[first_row][first_column]["status"] = "normal"
-#       board.board[second_row][second_column]["status"] = "normal"
-#       puts "Try again"
-#     end
-#     board.show_board({type:"hidden"})
-
-#     print "Enter q to Quit or hit enter to continue"
-#     option = gets.chomp
-#     if option == "q" || check_winner({raw_board:board.board})
-#       # system 'clear'
-#       change_game_image_status({raw_board:board.board})
-#       running = false
-#     end
-#   end
-# end
-
-# def change_game_image_status(parameters)
-#   raw_board = parameters[:raw_board]
-
-#   raw_board.length.times do |row|
-#     raw_board[0].length.times do |column|
-
-#       id = raw_board[row][column]["game_image_id"]
-#       parameters_game_image["status"] = raw_board[row][column]["status"]
-
-#       Unirest.patch("http://localhost:3000/game_images/#{id}",parameters:parameters_game_image)
-#     end
-#   end 
-# end
-
-
-# def check_winner(parameters)
-#   board = parameters[:raw_board]
-#   # p board.length
-#   board.length.times do |row|
-#     board[0].length.times do |column|
-#       if board[row][column]["status"] != "show"
-#         return false
-#       end 
-#     end
-#   end
-#   return true
-# end
 
 Frontend.new.run

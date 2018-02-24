@@ -1,11 +1,25 @@
 require 'unirest'
+require_relative "board"
 module Play
+  include Board
   def show_board(parameters)
     # system 'clear'
 
     game_id = parameters[:game_id]
     response = Unirest.get("http://localhost:3000/games/#{game_id}")
     data = response.body
+    list = []
+
+    data["game_images"].each do |game_image|
+      if game_image["status"]
+        list << "--"
+      elsif game_image["status"] == "flipped" || game_image["status"] == "viewed"
+        list << "#{game_image["image"]["name"]}*"
+      else
+        list << "#{game_image["id"]}"
+      end
+    end
+    Board.print_board({array: list})
 
     option = parameters[:option] || "game"
     case option
