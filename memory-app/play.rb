@@ -8,35 +8,27 @@ module Play
     game_id = parameters[:game_id]
     response = Unirest.get("http://localhost:3000/games/#{game_id}")
     data = response.body
-    list = []
-
-    data["game_images"].each do |game_image|
-      if game_image["status"]
-        list << "--"
-      elsif game_image["status"] == "flipped" || game_image["status"] == "viewed"
-        list << "#{game_image["image"]["name"]}*"
-      else
-        list << "#{game_image["id"]}"
-      end
-    end
-    Board.print_board({array: list})
 
     option = parameters[:option] || "game"
     case option
     when "test"
+      list = []
       data["game_images"].each do |game_image| 
-        puts "-#{game_image["id"]}-#{game_image["image"]["name"]}"
+        list << "-#{game_image["id"]}-#{game_image["image"]["name"]}"
       end
+      Board.print_board({array: list})
     when "game"
-      data["game_images"].each do |game_image| 
-        if game_image["status"] == "ok"
-          puts "---"
+      list = []
+      data["game_images"].each do |game_image|
+        if game_image["status"] === "ok"
+          list << "---"
         elsif game_image["status"] == "flipped" || game_image["status"] == "viewed"
-          puts "#{game_image["image"]["name"]} *"
-        else
-         puts "-#{game_image["id"]}-"
+          list << "#{game_image["image"]["name"]}*"
+        elsif game_image["status"] == "normal"
+          list << "#{game_image["id"]}"
         end
       end
+      Board.print_board({array: list})
     end
     puts "" 
   end

@@ -28,30 +28,34 @@ class Frontend
     user_email = 'Welcome visitor'
     while running == true
       # system 'clear'
-      puts "Test
+        puts "Test
         [0] catpix test"
 
-      puts "#{user_email}
-      Select an option
+        puts "#{user_email}
+        Select an option
         [1] Sing Up
         [2] Login
         [3] Logout
         [4] Play"
 
-      puts "Game options
-      Select an option
-      [g1] Show all"
+        puts "Game options
+        Select an option
+        [g1] Show all
+        [g2] Create
+        [g3] Show One
+        [g4] Update
+        [g5] Destroy"
 
-      puts "Image options
-      Select an option
+        puts "Image options
+        Select an option
         [i1] Show all
         [i2] Create
         [i3] Show one
         [i4] Update
         [i5] Destroy"
 
-      puts "Tag options
-      Select an option
+        puts "Tag options
+        Select an option
         [t1] Show all
         [t2] Create
         [t3] Show one
@@ -109,8 +113,15 @@ class Frontend
       when "4"
         puts "Playing"
         parameters = {}
-        parameters[:rows] = 2
-        parameters[:columns] = 2
+        print "Amount of images (Even number): "
+        parameters[:amount_images] = gets.chomp
+
+        tag_response = Unirest.get("http://localhost:3000/tags")
+        tag_data = tag_response.body
+        puts JSON.pretty_generate(tag_data)
+
+        print "Tag name: "
+        parameters[:tag] = gets.chomp
         game = Unirest.post("http://localhost:3000/games",parameters:parameters)
         game_hash = game.body
         puts JSON.pretty_generate(game_hash)
@@ -120,7 +131,59 @@ class Frontend
       when "g1"
         response = Unirest.get("http://localhost:3000/games")
         data = response.body
-        puts JSON.pretty_generate(data)         
+        puts JSON.pretty_generate(data)
+
+      when "g2"
+        parameters = {}
+        print "Amount of images (Even number): "
+        parameters[:amount_images] = gets.chomp
+
+        tag_response = Unirest.get("http://localhost:3000/tags")
+        tag_data = tag_response.body
+        puts JSON.pretty_generate(tag_data)
+
+        print "Tag name: "
+        parameters[:tag] = gets.chomp
+        game = Unirest.post("http://localhost:3000/games",parameters:parameters)
+        game_hash = game.body
+        puts JSON.pretty_generate(game_hash)
+
+      when "g3"
+        print "id: "
+        id = gets.chomp
+        game_response = Unirest.get("http://localhost:3000/games/#{id}")
+        game_data = game_response.body
+        puts JSON.pretty_generate(game_data)
+
+      when "g4"
+
+        print "id: "
+        id = gets.chomp
+        game_response = Unirest.get("http://localhost:3000/games/#{id}")
+        game_data = game_response.body
+        amount_images = game_data["rows"].to_i * game_data["columns"].to_i
+
+        parameters = {}
+        print "Amount of images (Even number) (#{amount_images}): "
+        parameters[:amount_images] = gets.chomp 
+
+        tag_response = Unirest.get("http://localhost:3000/tags")
+        tag_data = tag_response.body
+        puts JSON.pretty_generate(tag_data)
+
+        puts "Tag name: no implemented"
+       
+        game = Unirest.post("http://localhost:3000/games",parameters:parameters)
+        game_hash = game.body
+        puts JSON.pretty_generate(game_hash)
+
+      when "g5"
+        print "id: "
+        id = gets.chomp
+        game_response = Unirest.delete("http://localhost:3000/games/#{id}")
+        game_data = game_response.body
+        puts JSON.pretty_generate(game_data)
+        
       when "i1"
         response = Unirest.get("http://localhost:3000/images")
         data = response.body
@@ -129,6 +192,16 @@ class Frontend
         parameters = {}
         print "image_url: "
         parameters[:image_url]=gets.chomp
+
+        tags = Unirest.get("http://localhost:3000/tags")
+        tags_data = tags.body
+        puts JSON.pretty_generate(tags_data)
+
+        print "Add tags by id: "
+        parameters[:tag_ids] = gets.chomp
+        parameters.delete_if { |key, value| value.empty? }
+
+
         response = Unirest.post("http://localhost:3000/images",parameters:parameters)
         data = response.body
         puts JSON.pretty_generate(data)
@@ -168,13 +241,22 @@ class Frontend
         data = response.body
         puts JSON.pretty_generate(data)
       when "t1"
-        response = Unirest.get("http://localhost:3000/tags")
-        data = response.body
-        puts JSON.pretty_generate(data)
+        tag_response = Unirest.get("http://localhost:3000/tags")
+        tag_data = tag_response.body
+        puts JSON.pretty_generate(tag_data)
       when "t2"
         parameters = {}
         print "name: "
         parameters[:name] = gets.chomp
+
+        images_response = Unirest.get("http://localhost:3000/images")
+        images_data = images_response.body
+        puts JSON.pretty_generate(images_data)
+
+        print "Add images by id: "
+        parameters[:image_ids] = gets.chomp
+        parameters.delete_if { |key, value| value.empty? }
+
         response = Unirest.post("http://localhost:3000/tags",parameters:parameters)
         data = response.body
         puts JSON.pretty_generate(data)

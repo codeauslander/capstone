@@ -6,20 +6,23 @@ class GamesController < ApplicationController
     render 'index.json.jbuilder'
   end
   def create
+    amount_images = params[:amount_images].to_i || 2
+    rows = multiples(amount_images)[:rows]
+    columns = multiples(amount_images)[:columns]
+
     @game = Game.create(
         user_id: current_user.id , 
         done:false, 
-        rows:params[:rows], 
-        columns:params[:columns],
+        rows:rows, 
+        columns:columns,
         score: 0
       )
-    tag = params[:tag] || "ski_jumping"
-    images_by_tag = Tag.find_by(name: tag).images
-    deck = create_deck(images_by_tag)
-    puts "deck #{deck}"
+    tag_name = params[:tag] || "ski_jumping"
+    tag = Tag.find_by(name: tag_name)
+    images = tag.images.last(30).shuffle
     2.times do 
-      deck.each do |image|
-        p GameImage.create(status: "normal", image_id: image.id, game_id: @game.id)
+      amount_images.times do |index|
+        p GameImage.create(status: "normal", image_id: images[index]["id"], game_id: @game.id)
       end
     end
     render 'show.json.jbuilder'
@@ -32,6 +35,7 @@ class GamesController < ApplicationController
   #continue game
   def update
     @game = Game.find(params[:id])
+    
     render 'show.json.jbuilder'
   end
   def destroy
@@ -41,19 +45,13 @@ class GamesController < ApplicationController
   end
 
   private
-  def create_deck(images_by_tag)
-    # last_index = images_by_tag.length - 1
-    # last_index = 9 if last_index > 9
-    last_index = 1
-    deck = []
-    indexes = (0..last_index).to_a.shuffle
-    (last_index + 1).times do
-      index = indexes.pop || 0
-      deck << images_by_tag[index]
-    end
-    deck
+  def multiples(number)
+    # number += 1 if number % 2 != 0
+    return nil if number % 2 != 0
+    return [1,2] if number == 2
+    list = (2..(number / 2)).to_a.delete_if { |n| n unless number % n == 0}
+    middle_index = list.length/2
+    {rows: list[middle_index - 1], columns: list[middle_index]}
   end
-
-
 end
   

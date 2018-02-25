@@ -4,9 +4,11 @@ class TagsController < ApplicationController
     render 'index.json.jbuilder'
   end
   def create
-    @tag = Tag.create(
+    @tag = Tag.new(
         name:params[:name]
       )
+    @tag.add_images(params[:image_ids]) if params[:image_ids]
+    @tag.save
     render 'show.json.jbuilder'
   end
   def show

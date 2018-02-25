@@ -18,4 +18,3 @@ json.game_images game.game_images.order(:id).each do |game_image|
   end
 end
 
-json.actual_score game.actual_score
