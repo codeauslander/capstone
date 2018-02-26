@@ -6,8 +6,11 @@ class Game < ApplicationRecord
 
 
   def update_flipped
-    game_images.where(status:"viewed").update_all(status:"normal")
+
     flip_images = game_images.where(status:"flipped")
+    if flip_images.length == 1
+      game_images.where(status:"viewed").update_all(status:"normal")
+    end
     if flip_images.length == 2
       if flip_images[0].image_id == flip_images[1].image_id
         flip_images.update_all(status:"ok")   
@@ -15,6 +18,7 @@ class Game < ApplicationRecord
         flip_images.update_all(status:"viewed")
       end
     end
+    
     self.done = is_winner
     self.score = game_images.where(status:"ok").count
   end

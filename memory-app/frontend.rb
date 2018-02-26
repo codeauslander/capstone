@@ -114,14 +114,16 @@ class Frontend
         puts "Playing"
         parameters = {}
         print "Amount of images (Even number): "
-        parameters[:amount_images] = gets.chomp
-
+        amount_images = gets.chomp
+        parameters[:amount_images] = amount_images == "" ? nil : amount_images
         tag_response = Unirest.get("http://localhost:3000/tags")
         tag_data = tag_response.body
         puts JSON.pretty_generate(tag_data)
 
         print "Tag name: "
-        parameters[:tag] = gets.chomp
+        tag_name = gets.chomp
+        parameters[:tag] = tag_name == "" ? nil : tag_name
+
         game = Unirest.post("http://localhost:3000/games",parameters:parameters)
         game_hash = game.body
         puts JSON.pretty_generate(game_hash)

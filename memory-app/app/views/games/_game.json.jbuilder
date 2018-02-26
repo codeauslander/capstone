@@ -5,7 +5,7 @@ json.score game.score
 json.done game.done
 
 # adding the game_images of the game to the output
-json.game_images game.game_images.order(:id).each do |game_image|
+json.game_images game.game_images.each do |game_image|
   json.id game_image.id
   json.status game_image.status
   json.image_id game_image.image_id 
