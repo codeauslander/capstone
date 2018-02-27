@@ -4,7 +4,7 @@ var HomePage = {
   template: "#home-page",
   data: function() {
     return {
-      cards: "",
+      cards: [],
       amountImages: 10,
       tagName: "ski_jumping",
       errors: []
@@ -17,9 +17,15 @@ var HomePage = {
     };
     axios
       .post("/games", params)
-      .then(function(response) {
-        this.cards = response.data;
-      })
+      .then(
+        function(response) {
+          console.log("Hi");
+          // console.log(this.cards);
+          this.cards = response.data.game_images;
+          console.log("Hello");
+          console.log(this.cards);
+        }.bind(this)
+      )
       .catch(
         function(error) {
           this.errors = ["No no no."];

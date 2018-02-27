@@ -65,13 +65,9 @@
       <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
       <div class="card-block">
         <ul>
-          <il v-for="card in cards.game_images">{{card.image.name}}
-            
-          </il>
-          }
-          }
+          <li v-for="card in cards" v-bind:key="card.id">{{card.image.name}}
+          </li>
         </ul>
-        
       </div>
     </div>
   </div>
