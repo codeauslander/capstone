@@ -4,6 +4,7 @@ var HomePage = {
   template: "#home-page",
   data: function() {
     return {
+      game: "",
       cards: [],
       amountImages: 10,
       tagName: "ski_jumping",
@@ -20,10 +21,11 @@ var HomePage = {
       .then(
         function(response) {
           console.log("Hi");
+          console.log(response.data);
+          this.game = response.data;
+          this.cards = this.game.game_images;
+          // console.log("Hello");
           // console.log(this.cards);
-          this.cards = response.data.game_images;
-          console.log("Hello");
-          console.log(this.cards);
         }.bind(this)
       )
       .catch(
@@ -32,7 +34,16 @@ var HomePage = {
         }.bind(this)
       );
   },
-  methods: {},
+  methods: {
+    isRow: function(card) {
+      var index = this.cards.indexOf(card);
+      var modulo = index % this.game.rows;
+      if (modulo === 0 || index === 0) {
+        return true;
+      }
+      return false;
+    }
+  },
   computed: {}
 };
 

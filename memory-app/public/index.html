@@ -61,16 +61,18 @@
 
 <template id="home-page">
   <div class="vue-component">
-    <div class="card">
-      <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
-      <div class="card-block">
-        <ul>
-          <li v-for="card in cards" v-bind:key="card.id">{{card.image.name}}
-          </li>
-        </ul>
-      </div>
+
+    <div  class="card"  v-for="card in cards" v-bind:key="card.id">
+      <div v-bind:class="{row: isRow(card)}">
+        <h1 v-if="isRow(card)">Row</h1>
+        <div class="col-4">
+          <img class="card-img-top" src="icons8-alpine-skiing.png" alt="Card image cap">
+          <div class="card-block" >
+            {{card.image.name}}
+          </div>
+        </div>
+      </div>      
     </div>
-  </div>
 </template>
 
 <template id="signup-page">

@@ -7,9 +7,9 @@ class GamesController < ApplicationController
   end
   def create
 
-    amount_images = (params[:amount_images] == nil) || (params[:amount_images] == "") ? 2 : params[:amount_images].to_i
-    rows = multiples(amount_images)[:rows]
-    columns = multiples(amount_images)[:columns]
+    amount_images_total = (params[:amount_images] == nil) || (params[:amount_images] == "") ? 2 : (params[:amount_images].to_i * 2)
+    rows = multiples(amount_images_total)[:rows]
+    columns = multiples(amount_images_total)[:columns]
 
     @game = Game.create(
         user_id: current_user.id , 
@@ -27,7 +27,7 @@ class GamesController < ApplicationController
 
     game_images_hashes = []
     2.times do 
-      amount_images.times do |index|
+      (amount_images_total/2).times do |index|
         game_images_hashes << {status: "normal", image_id: random_images_ids[index], game_id: @game.id}
       end
     end
