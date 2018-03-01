@@ -70,9 +70,9 @@
         <div class="col-2" v-for="card in boardRow">
           <a href="/#/" v-on:click="flip(card)">
             <div  class="card" >
-              <img class="card-img-top" v-if="card.status === 'flipped'" v-bind:src="card.image_url" alt="Card image cap">
-              <img class="card-img-top" v-if="card.status === 'normal' " src="ski_jumping.png" alt="Card image cap">
-              <img class="card-img-top" v-if="card.status === 'ok' " src="cup.png" alt="Card image cap">
+              <img class="card-img-top" v-if="isFlipped(card)" v-bind:src="card.image_url" alt="Card image cap">
+              <img class="card-img-top" v-if="isNormal(card) " src="ski_jumping.png" alt="Card image cap">
+              <img class="card-img-top" v-if="isOk(card)" src="cup.png" alt="Card image cap">
 
               <div class="card-block">
                 {{card}}

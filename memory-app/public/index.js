@@ -22,13 +22,9 @@ var HomePage = {
         .post("/games", params)
         .then(
           function(response) {
-            console.log("starting created");
-            console.log("response from post games");
             console.log(response.data);
             this.game = response.data;
             this.board = this.game.board;
-            // console.log("Hello");
-            // console.log(this.board);
           }.bind(this)
         )
         .catch(
@@ -38,17 +34,15 @@ var HomePage = {
         );
     },
     flip: function(card) {
-      console.log("starting flip");
-      console.log(card);
       var parameters = { status: "flipped" };
+      console.log(
+        " card.game_image_id" + card.game_image_id + "image_id" + card.image_id
+      );
       axios
         .patch("/game_images/" + card.game_image_id, parameters)
         .then(
           function(response) {
-            console.log(response.data);
             this.show();
-            console.log("flip");
-            // router.push("/");
           }.bind(this)
         )
         .catch(
@@ -58,19 +52,34 @@ var HomePage = {
         );
     },
     show: function() {
-      console.log("starting show");
-      console.log(this.game.id);
       axios
         .get("/games/" + this.game.id)
         .then(
           function(response) {
-            this.game = "";
-            this.boar = [];
+            // this.game = "";
+            // this.boar = [];
+            console.log("this.board before");
+            console.log(
+              this.board.map(function(card_row) {
+                return card_row.map(function(card) {
+                  return card.game_image_id;
+                });
+              })
+            );
+            // this.game = response.data;
 
-            this.game = response.data;
-            this.board = this.game.board;
-            console.log(this.board);
-            console.log("show");
+            this.board = response.data.board;
+            console.log("this.board after");
+            console.log(
+              this.board.map(function(card_row) {
+                return card_row.map(function(card) {
+                  return card.game_image_id;
+                });
+              })
+            );
+
+            // console.log("this.game.boar");
+            // console.log(this.game.board);
           }.bind(this)
         )
         .catch(
@@ -78,6 +87,24 @@ var HomePage = {
             this.errors = error.response.data.errors;
           }.bind(this)
         );
+    },
+    isFlipped: function(card) {
+      if (card.status === "flipped") {
+        return true;
+      }
+      return false;
+    },
+    isNormal: function(card) {
+      if (card.status === "normal") {
+        return true;
+      }
+      return false;
+    },
+    isOk: function(card) {
+      if (card.status === "ok") {
+        return true;
+      }
+      return false;
     }
   },
   computed: {}

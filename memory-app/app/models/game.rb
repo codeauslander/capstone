@@ -21,6 +21,7 @@ class Game < ApplicationRecord
     
     self.done = is_winner
     self.score = game_images.where(status:"ok").count
+    return true
   end
 
   def is_winner
@@ -30,16 +31,17 @@ class Game < ApplicationRecord
   def board
     board = []
     index = 0
-    rows.times do |row|
+    sort_game_images = game_images.sort
+    self.rows.times do |row|
       board_row = []
-      columns.times do |column|
-        game_image = game_images[index]
+      self.columns.times do |column|
+        game_image = sort_game_images[index]
         board_row << {row: row, column: column,status: game_image.status,image_url: game_image.image.image_url, name: game_image.image.name, game_image_id: game_image.id, image_id: game_image.image_id}
         index += 1
       end
       board << board_row
     end
-    board    
+    board
   end
 end
 
