@@ -26,5 +26,20 @@ class Game < ApplicationRecord
   def is_winner
     game_images.length == game_images.where(status:"ok").length ? true : false
   end
+
+  def board
+    board = []
+    index = 0
+    rows.times do |row|
+      board_row = []
+      columns.times do |column|
+        game_image = game_images[index]
+        board_row << {row: row, column: column,status: game_image.status,image_url: game_image.image.image_url, name: game_image.image.name, game_image_id: game_image.id, image_id: game_image.image_id}
+        index += 1
+      end
+      board << board_row
+    end
+    board    
+  end
 end
 

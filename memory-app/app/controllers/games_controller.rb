@@ -65,5 +65,7 @@ class GamesController < ApplicationController
     middle_index = list.length/2
     {rows: list[middle_index - 1], columns: list[middle_index]}
   end
+
+  
 end
   

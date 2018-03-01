@@ -18,3 +18,5 @@ json.game_images game.game_images.each do |game_image|
   end
 end
 
+json.board game.board
+

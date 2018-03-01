@@ -5,43 +5,79 @@ var HomePage = {
   data: function() {
     return {
       game: "",
-      cards: [],
+      board: [],
       amountImages: 10,
       tagName: "ski_jumping",
       errors: []
     };
   },
-  created: function() {
-    var params = {
-      amount_images: this.amountImages,
-      tag_name: this.tagName
-    };
-    axios
-      .post("/games", params)
-      .then(
-        function(response) {
-          console.log("Hi");
-          console.log(response.data);
-          this.game = response.data;
-          this.cards = this.game.game_images;
-          // console.log("Hello");
-          // console.log(this.cards);
-        }.bind(this)
-      )
-      .catch(
-        function(error) {
-          this.errors = ["No no no."];
-        }.bind(this)
-      );
-  },
+  created: function() {},
   methods: {
-    isRow: function(card) {
-      var index = this.cards.indexOf(card);
-      var modulo = index % this.game.rows;
-      if (modulo === 0 || index === 0) {
-        return true;
-      }
-      return false;
+    play: function(argument) {
+      var params = {
+        amount_images: this.amountImages,
+        tag_name: this.tagName
+      };
+      axios
+        .post("/games", params)
+        .then(
+          function(response) {
+            console.log("starting created");
+            console.log("response from post games");
+            console.log(response.data);
+            this.game = response.data;
+            this.board = this.game.board;
+            // console.log("Hello");
+            // console.log(this.board);
+          }.bind(this)
+        )
+        .catch(
+          function(error) {
+            this.errors = ["No no no."];
+          }.bind(this)
+        );
+    },
+    flip: function(card) {
+      console.log("starting flip");
+      console.log(card);
+      var parameters = { status: "flipped" };
+      axios
+        .patch("/game_images/" + card.game_image_id, parameters)
+        .then(
+          function(response) {
+            console.log(response.data);
+            this.show();
+            console.log("flip");
+            // router.push("/");
+          }.bind(this)
+        )
+        .catch(
+          function(error) {
+            this.errors = error.response.data.errors;
+          }.bind(this)
+        );
+    },
+    show: function() {
+      console.log("starting show");
+      console.log(this.game.id);
+      axios
+        .get("/games/" + this.game.id)
+        .then(
+          function(response) {
+            this.game = "";
+            this.boar = [];
+
+            this.game = response.data;
+            this.board = this.game.board;
+            console.log(this.board);
+            console.log("show");
+          }.bind(this)
+        )
+        .catch(
+          function(error) {
+            this.errors = error.response.data.errors;
+          }.bind(this)
+        );
     }
   },
   computed: {}

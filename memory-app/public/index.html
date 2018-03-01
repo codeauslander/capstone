@@ -35,7 +35,7 @@
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Dropdown
+              User
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="/#/login">Login</a>
@@ -61,18 +61,32 @@
 
 <template id="home-page">
   <div class="vue-component">
+    <button v-on:click="play()" >Play</button>
 
-    <div  class="card"  v-for="card in cards" v-bind:key="card.id">
-      <div v-bind:class="{row: isRow(card)}">
-        <h1 v-if="isRow(card)">Row</h1>
-        <div class="col-4">
-          <img class="card-img-top" src="icons8-alpine-skiing.png" alt="Card image cap">
-          <div class="card-block" >
-            {{card.image.name}}
-          </div>
-        </div>
-      </div>      
-    </div>
+<div class="card">
+  <div class="offset-1 col-10">
+    
+      <div class="row" v-for="boardRow in board" >
+        <div class="col-2" v-for="card in boardRow">
+          <a href="/#/" v-on:click="flip(card)">
+            <div  class="card" >
+              <img class="card-img-top" v-if="card.status === 'flipped'" v-bind:src="card.image_url" alt="Card image cap">
+              <img class="card-img-top" v-if="card.status === 'normal' " src="ski_jumping.png" alt="Card image cap">
+              <img class="card-img-top" v-if="card.status === 'ok' " src="cup.png" alt="Card image cap">
+
+              <div class="card-block">
+                {{card}}
+             <!--    {{card.game_image_id}}
+                {{card.name}}
+                {{card.status}} -->
+              </div>
+            </div>
+          </a>
+      </div>
+   </div>
+  </div>
+</div>
+    
 </template>
 
 <template id="signup-page">
