@@ -4,9 +4,23 @@ var HomePage = {
   template: "#home-page",
   data: function() {
     return {
+      message: "Welcome!!! Enjoy, press play.",
+      errors: []
+    };
+  },
+  created: function() {},
+  methods: {},
+
+  computed: {}
+};
+
+var PlayPage = {
+  template: "#play-page",
+  data: function() {
+    return {
       game: "",
       board: [],
-      amountImages: 10,
+      amountImages: 12,
       tagName: "ski_jumping",
       errors: []
     };
@@ -89,7 +103,7 @@ var HomePage = {
         );
     },
     isFlipped: function(card) {
-      if (card.status === "flipped") {
+      if (card.status === "flipped" || card.status === "viewed") {
         return true;
       }
       return false;
@@ -189,8 +203,8 @@ var LogoutPage = {
 
 var router = new VueRouter({
   routes: [
-    { path: "/", component: HomePage },
-    { path: "/games", component: HomePage },
+    { path: "/", component: PlayPage },
+    { path: "/games", component: PlayPage },
     { path: "/signup", component: SignupPage },
     { path: "/login", component: LoginPage },
     { path: "/logout", component: LogoutPage }
