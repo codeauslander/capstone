@@ -80,8 +80,8 @@ var PlayPage = {
                 });
               })
             );
-            // this.game = response.data;
 
+            this.game = response.data;
             this.board = response.data.board;
             console.log("this.board after");
             console.log(
@@ -91,9 +91,6 @@ var PlayPage = {
                 });
               })
             );
-
-            // console.log("this.game.boar");
-            // console.log(this.game.board);
           }.bind(this)
         )
         .catch(
@@ -122,6 +119,50 @@ var PlayPage = {
     }
   },
   computed: {}
+};
+
+var TagsPage = {
+  template: "#tags-page",
+  data: function() {
+    return {
+      tags: []
+    };
+  },
+  created: function() {
+    axios.get("/tags").then(
+      function(response) {
+        this.tags = response.data;
+      }.bind(this)
+    );
+  },
+  methods: {},
+  computed: {}
+};
+
+var TagsNewPage = {
+  data: function() {
+    return {
+      name: "",
+      errors: []
+    };
+  },
+  methods: {
+    submit: function() {
+      var parameters = { name: this.name };
+      axios
+        .post("/tags", parameters)
+        .then(
+          function(response) {
+            router.push("/tags");
+          }.bind(this)
+        )
+        .catch(
+          function(error) {
+            this.errors = error.response.data.errors;
+          }.bind(this)
+        );
+    }
+  }
 };
 
 // Authorization Components
@@ -205,6 +246,8 @@ var router = new VueRouter({
   routes: [
     { path: "/", component: PlayPage },
     { path: "/games", component: PlayPage },
+    { path: "/tags", component: TagsPage },
+    { path: "/tags/new", component: TagsNewPage },
     { path: "/signup", component: SignupPage },
     { path: "/login", component: LoginPage },
     { path: "/logout", component: LogoutPage }
