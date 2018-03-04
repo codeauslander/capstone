@@ -1,19 +1,5 @@
 /* global Vue, VueRouter, axios */
 
-var HomePage = {
-  template: "#home-page",
-  data: function() {
-    return {
-      message: "Welcome!!! Enjoy, press play.",
-      errors: []
-    };
-  },
-  created: function() {},
-  methods: {},
-
-  computed: {}
-};
-
 var PlayPage = {
   template: "#play-page",
   data: function() {
@@ -125,35 +111,30 @@ var TagsPage = {
   template: "#tags-page",
   data: function() {
     return {
+      newName:"",
+      newImageIds:"",
+      showNewTagForm:false,
       tags: []
     };
   },
   created: function() {
-    axios.get("/tags").then(
-      function(response) {
-        this.tags = response.data;
-      }.bind(this)
-    );
-  },
-  methods: {},
-  computed: {}
-};
-
-var TagsNewPage = {
-  data: function() {
-    return {
-      name: "",
-      errors: []
-    };
+    this.index();
   },
   methods: {
-    submit: function() {
-      var parameters = { name: this.name };
+    index: function() {
+      axios.get("/tags").then(
+        function(response) {
+          this.tags = response.data;
+        }.bind(this)
+      );
+    },
+    createTag: function() {
+      var parameters = { name: this.newName, image_ids: this.newImageIds};
       axios
         .post("/tags", parameters)
         .then(
           function(response) {
-            router.push("/tags");
+            this.tags.push(response.data);
           }.bind(this)
         )
         .catch(
@@ -161,9 +142,14 @@ var TagsNewPage = {
             this.errors = error.response.data.errors;
           }.bind(this)
         );
+    },
+    newTagForm:function() {
+      return this.showNewTagForm = !this.showNewTagForm
     }
-  }
+  },
+  computed: {}
 };
+
 
 // Authorization Components
 
@@ -247,7 +233,7 @@ var router = new VueRouter({
     { path: "/", component: PlayPage },
     { path: "/games", component: PlayPage },
     { path: "/tags", component: TagsPage },
-    { path: "/tags/new", component: TagsNewPage },
+    
     { path: "/signup", component: SignupPage },
     { path: "/login", component: LoginPage },
     { path: "/logout", component: LogoutPage }

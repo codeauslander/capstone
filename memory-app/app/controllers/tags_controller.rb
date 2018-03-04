@@ -9,7 +9,7 @@ class TagsController < ApplicationController
     @tag = Tag.new(
         name:params[:name]
       )
-    @tag.add_images(params[:image_ids]) if params[:image_ids]
+    @tag.add_images(params[:image_ids]) if (params[:image_ids] && params[:image_ids] != "")
     @tag.save
     render 'show.json.jbuilder'
   end

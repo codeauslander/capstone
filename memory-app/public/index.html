@@ -14,6 +14,7 @@
   <!-- css -->
   <!-- bootstrap -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
   <!-- game.css -->
   <link rel="stylesheet" href="game.css">
 </head>
@@ -55,12 +56,6 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 </html>
-
-<template id="home-page">
-  <div class="vue-component">
-    Welcome! Press play :D
-  </div>
-</template>
 
 <template id="play-page">
   <div class="vue-component">
@@ -115,19 +110,38 @@
 
 <template id="tags-page">
   <div class="vue-component">
-    <h1>tags</h1>
-    <ul v-for="tag in tags">
-      <li>{{tag}}</li>
-    </ul>
-  </div>
-</template>
+    
+    <div class="container ">
+      <div class="row justify-content-center">
+        <h2 class="">[ Tags ]
+        </h2>
+        <button v-on:click="newTagForm()" class="float-right btn btn-success">+</button>
 
-<template id="tags-new-page">
-  <div class="vue-component">
-    <h1>tags</h1>
-    <ul v-for="tag in tags">
-      <li>{{tag}}</li>
-    </ul>
+        <div class="row" v-if="showNewTagForm">
+          <h1>New Tag</h1>
+          <input type="text" placeholder="name" v-model="newName">
+          <input type="text" placeholder="1, 2, 3" v-model="newImageIds">
+          <button v-on:click="newTag()">Add</button>
+      </div>
+    
+      </div>
+      <div class="row" v-for="tag in tags">
+        <div class = "">
+          <h2>{{tag.name}}</h2>
+          <div class="float-left" v-for="image in tag.images">
+            <div class="card " >
+              <img class="card-img-top" v-bind:src="image.image_url" alt="Card image cap">
+              <div class="card-block">
+                <h6 class="card-title">{{image.name}}</h6>
+                <div class="container">
+                  <a href="#" class="btn btn-primary">delete</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
