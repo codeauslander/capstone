@@ -37,14 +37,14 @@ Rails.application.routes.draw do
   post '/game_images' => 'game_images#create'
   get '/game_images/:id' => 'game_images#show'
   patch '/game_images/:id' => 'game_images#update'
-  patch '/game_images/:id' => 'game_images#destroy'
+  delete '/game_images/:id' => 'game_images#destroy'
 
 # image_tags routes
   get '/image_tags' => 'image_tags#index'
   post '/image_tags' => 'image_tags#create'
   get '/image_tags/:id' => 'image_tags#show'
   patch '/image_tags/:id' => 'image_tags#update'
-  patch '/image_tags/:id' => 'image_tags#destroy'
+  delete '/image_tags/:id' => 'image_tags#destroy'
 
 
 end

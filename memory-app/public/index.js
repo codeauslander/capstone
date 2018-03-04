@@ -115,6 +115,10 @@ var TagsPage = {
       newImageIds: "",
       showNewTagForm: false,
 
+      newImageName: "",
+      newImageUrl: "",
+      showNewImageForm: false,
+
       tags: []
     };
   },
@@ -159,17 +163,30 @@ var TagsPage = {
       );
     },
     createImageInTag: function(tag) {
-      var parameters = { tag_ids: [tag.id], images_url: this.imageUrl };
-      axios.post("/images").then(function(response) {}.bind(this));
+      var parameters = {
+        tag_ids: [tag.id],
+        image_url: this.newImageUrl,
+        name: this.newImageName
+      };
+      console.log(parameters);
+      axios.post("/images", parameters).then(
+        function(response) {
+          var index = this.tags.indexOf(tag);
+          this.tags[index].images.push(response.data);
+          this.newImageUrl = "";
+          this.newImageName = "";
+        }.bind(this)
+      );
     },
-    newImageForm: function(tag) {
-      var index = this.tags.indexOf(tag);
-      this.tags[index].showNewImageForm = true;
-      this.tags[index].imageUrl = "";
-      this.tags[index].imageName = "";
-      console.log(this.tags[index].showNewImageForm);
-      console.log(tag.showNewImageForm);
-      // return this.tags[index].showNewImageForm;
+    newImageForm: function() {
+      return (this.showNewImageForm = !this.showNewImageForm);
+    },
+    deleteImageFromTag: function(tag, image) {
+      var index = tag.images.indexOf(image);
+      var id = tag.image_tags[index].id;
+      axios.delete("/image_tags/" + id).then(function(response) {
+        console.log(response.data);
+      });
     }
   },
   computed: {}

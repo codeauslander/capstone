@@ -112,6 +112,7 @@
   <div class="vue-component">
     
     <div class="container ">
+      <img src="" alt="">
       <div class="row justify-content-center">
         <h2 class="">[ Tags ]
         </h2>
@@ -128,13 +129,13 @@
           <div class="row">
             <button v-on:click="deleteTag(tag)" class="float-left btn btn-danger">-</button>  
             <h2>{{tag.name}}</h2>
-            <button v-on:click="newImageForm(tag)" class="float-left btn btn-success">+</button>
+            <button v-on:click="newImageForm()" class="float-left btn btn-success">+</button>
              
           </div>
-          <div class="row" v-if="tag.showNewImageForm">
-                <input placeholder="url" v-model="tag.imageUrl">
-                <input  placeholder="name" v-model="tag.imageName">
-                <button class="btn btn-success" v-on:click="createImageInTag()">New Image in {{tag.name}}</button>
+          <div class="row" v-if="showNewImageForm">
+                <input placeholder="url" v-model="newImageUrl">
+                <input  placeholder="name" v-model="newImageName">
+                <button class="btn btn-success" v-on:click="createImageInTag(tag)">New Image in {{tag.name}} {{tag.imageUrl}}</button>
           </div> 
           <div class="float-left" v-for="image in tag.images">
             <div class="card " >
@@ -145,16 +146,13 @@
                 <div class="container">
                   <div class="row ">
                     <div class="float-left">
-                    <a href="#" class="btn btn-danger">-</a>
+                    <a v-on:click="deleteImageFromTag(tag,image)" class="btn btn-danger">-</a>
                   </div>
                     <div class="">
-                    <a href="#" class="btn btn-info">""</a>
+                      <a href="#" class="btn btn-info">""</a>
+                    </div>
                   </div>
-                  
-                  </div>
-                </div>
-
-                
+                </div>   
               </div>
             </div>
           </div>

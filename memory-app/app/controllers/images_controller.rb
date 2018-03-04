@@ -6,11 +6,12 @@ class ImagesController < ApplicationController
   end
   def create
     @image = Image.new(
-        image_url:params[:image_url]
+        image_url:params[:image_url],
         name:params[:name]
       )
-    @image.add_tags(params[:tag_ids]) if params[:tag_ids]
     @image.save
+    @image.add_tags(params[:tag_ids]) if params[:tag_ids]
+    
     render 'show.json.jbuilder'
   end
   def show
@@ -21,7 +22,8 @@ class ImagesController < ApplicationController
     @image = Image.find(params[:id])
     @image.image_url = params[:image_url] || @image.image_url
     @image.name = params[:name] || @image.name
-    @image.add_tags(params[:tag_ids]) if params[:tag_ids]
+    @image.update_tags(params[:tag_ids]) if params[:tag_ids]
+    # @image.delete_tag(params[:tag_id])
     # add_tags(params[:tag_ids]) if params[:tag_ids]
     @image.save
     render 'show.json.jbuilder'
