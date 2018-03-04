@@ -115,27 +115,46 @@
       <div class="row justify-content-center">
         <h2 class="">[ Tags ]
         </h2>
-        <button v-on:click="newTagForm()" class="float-right btn btn-success">+</button>
-
-        <div class="row" v-if="showNewTagForm">
-          <h1>New Tag</h1>
-          <input type="text" placeholder="name" v-model="newName">
-          <input type="text" placeholder="1, 2, 3" v-model="newImageIds">
-          <button v-on:click="newTag()">Add</button>
+        <button v-on:click="newTagForm()" class="float-right btn btn-success">+</button>    
       </div>
-    
-      </div>
+      <div class="row justify-content-center" v-if="showNewTagForm">
+          
+          <input placeholder="name" v-model="newName">
+          <input  placeholder="1, 2, 3" v-model="newImageIds">
+          <button class="btn btn-success" v-on:click="createTag()">New Tag</button>
+      </div>  
       <div class="row" v-for="tag in tags">
         <div class = "">
-          <h2>{{tag.name}}</h2>
+          <div class="row">
+            <button v-on:click="deleteTag(tag)" class="float-left btn btn-danger">-</button>  
+            <h2>{{tag.name}}</h2>
+            <button v-on:click="newImageForm(tag)" class="float-left btn btn-success">+</button>
+             
+          </div>
+          <div class="row" v-if="tag.showNewImageForm">
+                <input placeholder="url" v-model="tag.imageUrl">
+                <input  placeholder="name" v-model="tag.imageName">
+                <button class="btn btn-success" v-on:click="createImageInTag()">New Image in {{tag.name}}</button>
+          </div> 
           <div class="float-left" v-for="image in tag.images">
             <div class="card " >
               <img class="card-img-top" v-bind:src="image.image_url" alt="Card image cap">
               <div class="card-block">
-                <h6 class="card-title">{{image.name}}</h6>
+                <h6 class="card-title">{{image.name}}
+                </h6>
                 <div class="container">
-                  <a href="#" class="btn btn-primary">delete</a>
+                  <div class="row ">
+                    <div class="float-left">
+                    <a href="#" class="btn btn-danger">-</a>
+                  </div>
+                    <div class="">
+                    <a href="#" class="btn btn-info">""</a>
+                  </div>
+                  
+                  </div>
                 </div>
+
+                
               </div>
             </div>
           </div>

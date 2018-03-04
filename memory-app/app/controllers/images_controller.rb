@@ -7,6 +7,7 @@ class ImagesController < ApplicationController
   def create
     @image = Image.new(
         image_url:params[:image_url]
+        name:params[:name]
       )
     @image.add_tags(params[:tag_ids]) if params[:tag_ids]
     @image.save

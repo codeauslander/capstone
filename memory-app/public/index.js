@@ -111,9 +111,10 @@ var TagsPage = {
   template: "#tags-page",
   data: function() {
     return {
-      newName:"",
-      newImageIds:"",
-      showNewTagForm:false,
+      newName: "",
+      newImageIds: "",
+      showNewTagForm: false,
+
       tags: []
     };
   },
@@ -125,16 +126,19 @@ var TagsPage = {
       axios.get("/tags").then(
         function(response) {
           this.tags = response.data;
+          console.log(this.tags);
         }.bind(this)
       );
     },
     createTag: function() {
-      var parameters = { name: this.newName, image_ids: this.newImageIds};
+      var parameters = { name: this.newName, image_ids: this.newImageIds };
       axios
         .post("/tags", parameters)
         .then(
           function(response) {
             this.tags.push(response.data);
+            this.newName = "";
+            this.newImageIds = "";
           }.bind(this)
         )
         .catch(
@@ -143,13 +147,33 @@ var TagsPage = {
           }.bind(this)
         );
     },
-    newTagForm:function() {
-      return this.showNewTagForm = !this.showNewTagForm
+    newTagForm: function() {
+      return (this.showNewTagForm = !this.showNewTagForm);
+    },
+    deleteTag: function(tag) {
+      axios.delete("/tags/" + tag.id).then(
+        function(response) {
+          var index = this.tags.indexOf(tag);
+          this.tags.splice(index, 1);
+        }.bind(this)
+      );
+    },
+    createImageInTag: function(tag) {
+      var parameters = { tag_ids: [tag.id], images_url: this.imageUrl };
+      axios.post("/images").then(function(response) {}.bind(this));
+    },
+    newImageForm: function(tag) {
+      var index = this.tags.indexOf(tag);
+      this.tags[index].showNewImageForm = true;
+      this.tags[index].imageUrl = "";
+      this.tags[index].imageName = "";
+      console.log(this.tags[index].showNewImageForm);
+      console.log(tag.showNewImageForm);
+      // return this.tags[index].showNewImageForm;
     }
   },
   computed: {}
 };
-
 
 // Authorization Components
 
@@ -233,7 +257,7 @@ var router = new VueRouter({
     { path: "/", component: PlayPage },
     { path: "/games", component: PlayPage },
     { path: "/tags", component: TagsPage },
-    
+
     { path: "/signup", component: SignupPage },
     { path: "/login", component: LoginPage },
     { path: "/logout", component: LogoutPage }
