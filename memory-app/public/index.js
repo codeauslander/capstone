@@ -119,14 +119,16 @@ var TagsPage = {
       newImageUrl: "",
       showNewImageForm: false,
 
-      tags: []
+      tags: [],
+      images: []
     };
   },
   created: function() {
-    this.index();
+    this.indexTags();
+    this.indexImages();
   },
   methods: {
-    index: function() {
+    indexTags: function() {
       axios.get("/tags").then(
         function(response) {
           this.tags = response.data;
@@ -184,9 +186,20 @@ var TagsPage = {
     deleteImageFromTag: function(tag, image) {
       var index = tag.images.indexOf(image);
       var id = tag.image_tags[index].id;
-      axios.delete("/image_tags/" + id).then(function(response) {
-        console.log(response.data);
-      });
+      axios.delete("/image_tags/" + id).then(
+        function(response) {
+          var index_tag = this.tags.indexOf(tag);
+          this.tags[index_tag].images.splice(index, 1);
+          console.log(response.data);
+        }.bind(this)
+      );
+    },
+    indexImages: function() {
+      axios.get("/images").then(
+        function(response) {
+          this.images = response.data;
+        }.bind(this)
+      );
     }
   },
   computed: {}
