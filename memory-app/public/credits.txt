@@ -1,0 +1,51 @@
+===================================================================
+Plugins Used
+===================================================================
+https://owlcarousel2.github.io/OwlCarousel2/docs/started-welcome.html
+https://silviomoreto.github.io/bootstrap-select/
+http://fancyapps.com/fancybox/3/docs/
+
+
+===================================================================
+Custom icon font
+===================================================================
+SVGs Origin - http://www.flaticon.com
+Then converted to icon font in http://app.fontastic.me
+See the icons in icons/reference directory.
+
+
+===================================================================
+Photos
+===================================================================
+https://www.pexels.com/photo/people-walking-up-and-down-the-staircase-in-the-city-in-tilt-shift-lens-88705/
+https://www.pexels.com/photo/architecture-bridge-buildings-cars-173427/
+https://www.pexels.com/photo/group-of-people-sitting-near-bonfire-188940/
+https://www.pexels.com/photo/night-8771/
+https://www.pexels.com/photo/people-on-dining-chair-inside-the-glass-wall-room-230736/
+https://www.pexels.com/photo/chairs-interior-design-restaurant-seats-239975/
+https://www.pexels.com/photo/man-and-woman-making-beverage-inside-room-196031/
+https://www.pexels.com/photo/italian-pizza-restaurant-italy-3498/
+https://www.pexels.com/photo/kitchen-interior-in-a-restaurant-169628/
+https://www.pexels.com/photo/adult-bar-cafe-city-employee-240223/
+https://www.pexels.com/photo/restaurant-bottles-dinner-lunch-66640/
+https://www.pexels.com/photo/interior-of-modern-building-331107/
+https://www.pexels.com/photo/high-angle-view-of-cityscape-against-cloudy-sky-313782/
+https://www.pexels.com/photo/black-wrought-metal-armless-chairs-outside-bar-under-white-patio-table-during-daytime-157213/
+https://www.pexels.com/photo/lighted-city-skylines-under-deep-blue-sky-during-night-time-28221/
+https://www.pexels.com/photo/woman-with-denim-jacket-walking-in-the-crowd-of-people-128983/
+https://www.pexels.com/photo/city-sunny-people-street-2752/
+https://www.pexels.com/photo/night-8771/
+https://www.pexels.com/photo/side-view-of-woman-in-illuminated-city-at-night-315191/
+https://www.pexels.com/photo/people-walking-up-and-down-the-staircase-in-the-city-in-tilt-shift-lens-88705/
+https://www.pexels.com/photo/people-eiffel-tower-lights-night-5156/
+https://www.pexels.com/photo/new-york-time-square-29732/
+https://www.pexels.com/photo/light-cars-traffic-bus-34624/
+https://www.pexels.com/photo/adult-beautiful-celebration-cozy-332090/
+https://www.pexels.com/photo/restaurant-village-germany-chairs-852/
+https://www.pexels.com/photo/restaurant-village-germany-chairs-852/
+https://www.pexels.com/photo/dadeo-bulletin-board-201314/
+https://www.pexels.com/photo/adult-agreement-beard-brainstorming-429247/
+http://www.freepik.com/free-vector/pack-of-four-abstract-colored-logos_1020489.htm
+http://www.freepik.com/free-vector/logo-template-design_1047048.htm
+http://www.freepik.com/free-vector/gold-and-black-logo-with-geometric-shapes_1042166.htm
+http://www.freepik.com/free-vector/real-estate-logo-template_840045.htm

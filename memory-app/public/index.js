@@ -119,13 +119,11 @@ var TagsPage = {
       newImageUrl: "",
       showNewImageForm: false,
 
-      tags: [],
-      images: []
+      tags: []
     };
   },
   created: function() {
     this.indexTags();
-    this.indexImages();
   },
   methods: {
     indexTags: function() {
@@ -193,7 +191,18 @@ var TagsPage = {
           console.log(response.data);
         }.bind(this)
       );
-    },
+    }
+  },
+  computed: {}
+};
+var ImagesPage = {
+  template: "#images-page",
+  data: function() {
+    return {
+      images: []
+    };
+  },
+  methods: {
     indexImages: function() {
       axios.get("/images").then(
         function(response) {
@@ -201,6 +210,9 @@ var TagsPage = {
         }.bind(this)
       );
     }
+  },
+  created: function() {
+    this.indexImages();
   },
   computed: {}
 };
@@ -287,6 +299,7 @@ var router = new VueRouter({
     { path: "/", component: PlayPage },
     { path: "/games", component: PlayPage },
     { path: "/tags", component: TagsPage },
+    { path: "/images", component: ImagesPage },
 
     { path: "/signup", component: SignupPage },
     { path: "/login", component: LoginPage },
