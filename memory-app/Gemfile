@@ -24,6 +24,8 @@ gem 'knock'
 gem 'tty-table'
 gem 'paint'
 
+gem "paperclip", "~> 5.1"
+
 
 # gem 'asciiart'
 # gem 'catpix'

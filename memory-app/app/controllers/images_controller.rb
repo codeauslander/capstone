@@ -22,7 +22,8 @@ class ImagesController < ApplicationController
     @image = Image.find(params[:id])
     @image.image_url = params[:image_url] || @image.image_url
     @image.name = params[:name] || @image.name
-    @image.update_tags(params[:tag_ids]) if params[:tag_ids]
+    # @image.update_tags(params[:tag_ids]) if params[:tag_ids]
+    @image.add_tag(params[:tag_id]) if params[:tag_id]
     # @image.delete_tag(params[:tag_id])
     # add_tags(params[:tag_ids]) if params[:tag_ids]
     @image.save

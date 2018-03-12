@@ -6,13 +6,28 @@ var PlayPage = {
     return {
       game: "",
       board: [],
-      amountImages: 12,
+      amountImages: 4,
       tagName: "ski_jumping",
-      errors: []
+      tags: [],
+      errors: [],
+      settings: false
     };
   },
-  created: function() {},
+  created: function() {
+    this.listTags();
+  },
   methods: {
+    isSettings: function() {
+      this.settings = !this.settings;
+    },
+    listTags: function() {
+      axios.get("/tags").then(
+        function(response) {
+          this.tags = response.data;
+          console.log(this.tags);
+        }.bind(this)
+      );
+    },
     play: function(argument) {
       var params = {
         amount_images: this.amountImages,
@@ -50,6 +65,7 @@ var PlayPage = {
             this.errors = error.response.data.errors;
           }.bind(this)
         );
+      this.isActive = !this.isActive;
     },
     show: function() {
       axios
@@ -195,30 +211,77 @@ var TagsPage = {
   },
   computed: {}
 };
+
 var ImagesPage = {
   template: "#images-page",
   data: function() {
     return {
-      images: []
+      images: [],
+      allTags: [],
+      newImageName: ""
     };
   },
   methods: {
+    uploadFile: function(event) {
+      if (event.target.files.length > 0) {
+        var formData = new FormData();
+        formData.append("name", this.newImageName);
+        formData.append("image_url", event.target.files[0]);
+
+        axios.post("/images", formData).then(
+          function(response) {
+            console.log(response);
+            this.newImageName = "";
+            event.target.value = "";
+          }.bind(this)
+        );
+      }
+    },
+
     indexImages: function() {
       axios.get("/images").then(
         function(response) {
           this.images = response.data;
         }.bind(this)
       );
+    },
+    addTag: function(image, tag) {
+      var parameters = { tag_id: tag.id };
+      axios.patch("/images/" + image.id, parameters).then(
+        function(response) {
+          var index = this.images.indexOf(image);
+          this.images[index].tags.push(tag);
+        }.bind(this)
+      );
+    },
+    listTags: function() {
+      axios.get("/tags").then(
+        function(response) {
+          this.allTags = response.data;
+          console.log(this.allTags);
+        }.bind(this)
+      );
+    },
+    deleteTagFromImage: function(image, tag) {
+      var index = image.tags.indexOf(tag);
+      var id = image.image_tags[index].id;
+      axios.delete("/image_tags/" + id).then(
+        function(response) {
+          var index_image = this.images.indexOf(image);
+          this.images[index_image].tags.splice(index, 1);
+          console.log(response.data);
+        }.bind(this)
+      );
     }
   },
   created: function() {
     this.indexImages();
+    this.listTags();
   },
   computed: {}
 };
 
 // Authorization Components
-
 var SignupPage = {
   template: "#signup-page",
   data: function() {
