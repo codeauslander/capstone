@@ -109,13 +109,10 @@
 
 <template id="play-page">
   <div class="vue-component">
-    <a href="/#/tags">
-      <h3>Click the text</h3>
-    </a>
     <div class="row">
       <div class="col-2">
         <div class="g-settings">
-          <button class="" v-if="isSettings">*</button>
+          <button class="" v-on:click="isSettings()" v-if="settings">*</button>
         </div>
         <div class="play-form card">
           <div class="justify-content-center">

@@ -29,6 +29,7 @@ var PlayPage = {
       );
     },
     play: function(argument) {
+      this.settings = true;
       var params = {
         amount_images: this.amountImages,
         tag_name: this.tagName
