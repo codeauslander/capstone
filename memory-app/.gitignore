@@ -14,3 +14,7 @@
 !/tmp/.keep
 
 .byebug_history
+
+# Ignore application configuration
+/config/aws.yml
+/config/application.yml

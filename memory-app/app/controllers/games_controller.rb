@@ -3,7 +3,7 @@ class GamesController < ApplicationController
 
   def index
     @games = current_user.games.last(11)
-    render 'index.json.jbuilder'
+    render json: @games.as_json
   end
   def create
 
@@ -13,14 +13,17 @@ class GamesController < ApplicationController
 
     @game = Game.create(
         user_id: current_user.id , 
-        done:false, 
+        done: false, 
         rows:rows, 
         columns:columns,
         score: 0
       )
 
-    tag_name = (params[:tag] == nil || "") ? "ski_jumping" : params[:tag]
-    tag = Tag.find_by(name: tag_name)
+    
+
+    tag_name = params["tag_name"]
+    p tag_name
+    tag = Tag.find_by(name:tag_name)
     
     images = tag.images
     random_images_ids = images.map{|image|image.id}.shuffle!
@@ -42,6 +45,7 @@ class GamesController < ApplicationController
   def show
     @game = Game.find(params[:id])
     @game.update_flipped
+    @game.save
     render 'show.json.jbuilder'
   end
   #continue game

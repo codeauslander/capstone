@@ -24,8 +24,9 @@ gem 'knock'
 gem 'tty-table'
 gem 'paint'
 
-gem "paperclip", "~> 5.1"
+gem 'paperclip'
 gem 'aws-sdk', '~> 2.3'
+gem 'figaro'
 
 
 # gem 'asciiart'

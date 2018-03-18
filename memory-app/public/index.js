@@ -1,4 +1,4 @@
-/* global Vue, VueRouter, axios */
+/* global Vue, VueRouter, axios *import */
 
 var PlayPage = {
   template: "#play-page",
@@ -6,8 +6,8 @@ var PlayPage = {
     return {
       game: "",
       board: [],
-      amountImages: 4,
-      tagName: "ski_jumping",
+      amountImages: 2,
+      tagName: "",
       tags: [],
       errors: [],
       settings: false
@@ -15,6 +15,17 @@ var PlayPage = {
   },
   created: function() {
     this.listTags();
+    var resumeGameId = this.$route.params.id;
+    if (resumeGameId) {
+      console.log("Boom!");
+      axios.get("/games/" + resumeGameId).then(
+        function(response) {
+          this.game = response.data;
+          this.board = this.game.board;
+          console.log(this.board);
+        }.bind(this)
+      );
+    }
   },
   methods: {
     isSettings: function() {
@@ -34,6 +45,7 @@ var PlayPage = {
         amount_images: this.amountImages,
         tag_name: this.tagName
       };
+      console.log(params);
       axios
         .post("/games", params)
         .then(
@@ -66,6 +78,7 @@ var PlayPage = {
             this.errors = error.response.data.errors;
           }.bind(this)
         );
+
       this.isActive = !this.isActive;
     },
     show: function() {
@@ -85,6 +98,8 @@ var PlayPage = {
             );
 
             this.game = response.data;
+            console.log("kasdjf;asdkjjf;asdk");
+            console.log(this.game);
             this.board = response.data.board;
             console.log("this.board after");
             console.log(
@@ -101,6 +116,8 @@ var PlayPage = {
             this.errors = error.response.data.errors;
           }.bind(this)
         );
+
+      // axios.patch("/games/" + this.game.id).then(function(response) {});
     },
     isFlipped: function(card) {
       if (card.status === "flipped" || card.status === "viewed") {
@@ -121,7 +138,166 @@ var PlayPage = {
       return false;
     }
   },
-  computed: {}
+  computed: {},
+  props: {}
+};
+
+var PlayedGames = {
+  template: "#played-games-page",
+  data: function() {
+    return {
+      games: [],
+      myGame: ""
+    };
+  },
+  created: function() {
+    this.listGames();
+  },
+  methods: {
+    listGames: function() {
+      axios.get("/games").then(
+        function(response) {
+          this.games = response.data;
+        }.bind(this)
+      );
+    },
+    playGame: function(game) {
+      console.log(game.id);
+      router.push("/games/" + game.id);
+    }
+  },
+  updated: function() {
+    // Create the chart
+    var gamesChart = this.games.map(function(game) {
+      var success = (game.rows + game.columns) / game.score * 100;
+      return { name: game.id, y: success, drilldow: game.id };
+    });
+    console.log(gamesChart);
+
+    Highcharts.chart("chart", {
+      chart: {
+        type: "column"
+      },
+      title: {
+        text: "Games Scores"
+      },
+      subtitle: {
+        // text:
+        //   'Click the columns to view versions. Source: <a href="http://statcounter.com" target="_blank">statcounter.com</a>'
+      },
+      xAxis: {
+        type: "Game"
+      },
+      yAxis: {
+        title: {
+          text: "Score"
+        }
+      },
+      legend: {
+        enabled: false
+      },
+      plotOptions: {
+        series: {
+          borderWidth: 0,
+          dataLabels: {
+            enabled: true,
+            format: "{point.y:.1f}%"
+          }
+        }
+      },
+
+      tooltip: {
+        headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+        pointFormat:
+          '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
+      },
+
+      series: [
+        {
+          name: "Browsers",
+          colorByPoint: true,
+          data: gamesChart
+        }
+      ]
+      // drilldown: {
+      //   series: [
+      //     {
+      //       name: "Chrome",
+      //       id: "Chrome",
+      //       data: [
+      //         ["v65.0", 0.1],
+      //         ["v64.0", 1.3],
+      //         ["v63.0", 53.02],
+      //         ["v62.0", 1.4],
+      //         ["v61.0", 0.88],
+      //         ["v60.0", 0.56],
+      //         ["v59.0", 0.45],
+      //         ["v58.0", 0.49],
+      //         ["v57.0", 0.32],
+      //         ["v56.0", 0.29],
+      //         ["v55.0", 0.79],
+      //         ["v54.0", 0.18],
+      //         ["v51.0", 0.13],
+      //         ["v49.0", 2.16],
+      //         ["v48.0", 0.13],
+      //         ["v47.0", 0.11],
+      //         ["v43.0", 0.17],
+      //         ["v29.0", 0.26]
+      //       ]
+      //     },
+      //     {
+      //       name: "Firefox",
+      //       id: "Firefox",
+      //       data: [
+      //         ["v58.0", 1.02],
+      //         ["v57.0", 7.36],
+      //         ["v56.0", 0.35],
+      //         ["v55.0", 0.11],
+      //         ["v54.0", 0.1],
+      //         ["v52.0", 0.95],
+      //         ["v51.0", 0.15],
+      //         ["v50.0", 0.1],
+      //         ["v48.0", 0.31],
+      //         ["v47.0", 0.12]
+      //       ]
+      //     },
+      //     {
+      //       name: "Internet Explorer",
+      //       id: "Internet Explorer",
+      //       data: [
+      //         ["v11.0", 6.2],
+      //         ["v10.0", 0.29],
+      //         ["v9.0", 0.27],
+      //         ["v8.0", 0.47]
+      //       ]
+      //     },
+      //     {
+      //       name: "Safari",
+      //       id: "Safari",
+      //       data: [
+      //         ["v11.0", 3.39],
+      //         ["v10.1", 0.96],
+      //         ["v10.0", 0.36],
+      //         ["v9.1", 0.54],
+      //         ["v9.0", 0.13],
+      //         ["v5.1", 0.2]
+      //       ]
+      //     },
+      //     {
+      //       name: "Edge",
+      //       id: "Edge",
+      //       data: [["v16", 2.6], ["v15", 0.92], ["v14", 0.4], ["v13", 0.1]]
+      //     },
+      //     {
+      //       name: "Opera",
+      //       id: "Opera",
+      //       data: [["v50.0", 0.96], ["v49.0", 0.82], ["v12.1", 0.14]]
+      //     }
+      //   ]
+      // }
+    });
+  },
+  props: {}
 };
 
 var TagsPage = {
@@ -219,14 +395,18 @@ var ImagesPage = {
     return {
       images: [],
       allTags: [],
-      newImageName: ""
+      newImageName: "",
+      newImageTag: ""
     };
   },
   methods: {
     uploadFile: function(event) {
       if (event.target.files.length > 0) {
+        console.log(this.newImageTag.id);
         var formData = new FormData();
         formData.append("name", this.newImageName);
+        formData.append("tag_id", this.newImageTag.id);
+
         formData.append("image_url", event.target.files[0]);
 
         axios.post("/images", formData).then(
@@ -238,7 +418,6 @@ var ImagesPage = {
         );
       }
     },
-
     indexImages: function() {
       axios.get("/images").then(
         function(response) {
@@ -264,6 +443,7 @@ var ImagesPage = {
       );
     },
     deleteTagFromImage: function(image, tag) {
+      console.log(tag);
       var index = image.tags.indexOf(tag);
       var id = image.image_tags[index].id;
       axios.delete("/image_tags/" + id).then(
@@ -362,8 +542,10 @@ var router = new VueRouter({
   routes: [
     { path: "/", component: PlayPage },
     { path: "/games", component: PlayPage },
+    { path: "/games/:id", component: PlayPage },
     { path: "/tags", component: TagsPage },
     { path: "/images", component: ImagesPage },
+    { path: "/playedGames", component: PlayedGames },
 
     { path: "/signup", component: SignupPage },
     { path: "/login", component: LoginPage },

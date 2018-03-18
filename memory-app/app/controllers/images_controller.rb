@@ -11,6 +11,7 @@ class ImagesController < ApplicationController
       )
     @image.save
     @image.add_tags(params[:tag_ids]) if params[:tag_ids]
+    @image.add_tag(params[:tag_id]) if params[:tag_id]
     
     render 'show.json.jbuilder'
   end

@@ -3,12 +3,23 @@ class Image < ApplicationRecord
   has_many :image_tags
   has_many :tags, through: :image_tags
 
-  has_attached_file :image_url
+  attr_reader :remote_url
+  has_attached_file :image_url, styles: {
+    thumb: '100x100>',
+    square: '200x200#',
+    medium: '300x300>'
+  }
     
   validates_attachment :image_url,
     content_type: {
       content_type: ["image/jpeg", "image/gif", "image/png"]
     }
+
+  def remote_url=(url_value)
+    self.image_url = URI.parse(url_value)
+    @remote_url = url_value
+    
+  end
 
   def add_tags(tag_ids)
     if tag_ids.is_a?(String)

@@ -13,7 +13,7 @@ json.game_images game.game_images.each do |game_image|
   # adding the image of every game_image to the output
   json.image do 
     json.id game_image.image.id
-    json.image_url game_image.image.image_url
+    json.image_url game_image.image.image_url(:medium)
     json.name game_image.image.name
   end
 end
