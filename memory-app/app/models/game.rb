@@ -1,5 +1,5 @@
 class Game < ApplicationRecord
-  belongs_to :user
+  belongs_to :user, optional: true
   has_many :game_images
   has_many :images, through: :game_images
 

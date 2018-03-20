@@ -45,6 +45,7 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
+  # config/enviroments/development.rb
   # config.paperclip_defaults = {
   # :storage => :s3,
   # :s3_host_name => 's3-us-east-2.amazonaws.com',

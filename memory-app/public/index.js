@@ -6,7 +6,7 @@ var PlayPage = {
     return {
       game: "",
       board: [],
-      amountImages: 2,
+      amountImages: 0,
       tagName: "",
       tags: [],
       errors: [],
@@ -25,8 +25,14 @@ var PlayPage = {
           console.log(this.board);
         }.bind(this)
       );
+    } else {
+      this.amountImages = 4;
+      this.tagName = "real-ski-jumping";
+
+      this.play();
     }
   },
+
   methods: {
     isSettings: function() {
       this.settings = !this.settings;
@@ -39,7 +45,7 @@ var PlayPage = {
         }.bind(this)
       );
     },
-    play: function(argument) {
+    play: function() {
       this.settings = true;
       var params = {
         amount_images: this.amountImages,
@@ -138,6 +144,7 @@ var PlayPage = {
       return false;
     }
   },
+  updated: function() {},
   computed: {},
   props: {}
 };
@@ -400,7 +407,7 @@ var ImagesPage = {
     };
   },
   methods: {
-    uploadFile: function(event) {
+    upload  File: function(event) {
       if (event.target.files.length > 0) {
         console.log(this.newImageTag.id);
         var formData = new FormData();

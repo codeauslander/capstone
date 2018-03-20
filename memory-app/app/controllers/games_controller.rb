@@ -1,5 +1,5 @@
 class GamesController < ApplicationController
-  before_action :authenticate_user, only: [:create]
+  before_action :authenticate_user, only: [:index]
 
   def index
     @games = current_user.games.last(11)
@@ -10,15 +10,17 @@ class GamesController < ApplicationController
     amount_images_total = (params[:amount_images] == nil) || (params[:amount_images] == "") ? 2 : (params[:amount_images].to_i * 2)
     rows = multiples(amount_images_total)[:rows]
     columns = multiples(amount_images_total)[:columns]
-
+    
     @game = Game.create(
-        user_id: current_user.id , 
+         
         done: false, 
         rows:rows, 
         columns:columns,
         score: 0
       )
-
+    if current_user
+      @game.user_id = current_user.id 
+    end
     
 
     tag_name = params["tag_name"]
