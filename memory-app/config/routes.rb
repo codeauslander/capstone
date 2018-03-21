@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+
+
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
 # knock gem
@@ -39,12 +42,17 @@ Rails.application.routes.draw do
   patch '/game_images/:id' => 'game_images#update'
   delete '/game_images/:id' => 'game_images#destroy'
 
-# image_tags routes
+  # image_tags routes
   get '/image_tags' => 'image_tags#index'
   post '/image_tags' => 'image_tags#create'
   get '/image_tags/:id' => 'image_tags#show'
   patch '/image_tags/:id' => 'image_tags#update'
   delete '/image_tags/:id' => 'image_tags#destroy'
+
+  #informations routes (apis)
+  get '/informations' => 'informations#index'
+
+  
 
 
 end
