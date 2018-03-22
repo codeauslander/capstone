@@ -28,7 +28,17 @@ class Image < ApplicationRecord
       tag_ids.each{|tag_id| ImageTag.create(image_id:self.id,tag_id:tag_id)}
     end
   end
+
   def add_tag(tag_id)
+    puts "*"*50
+    puts tag_id
     ImageTag.create(image_id:self.id, tag_id:tag_id)
   end
+
+  # def photos(search)
+  #   # http://localhost:3000/photos/?search=m
+  #   # search = params[:search]
+  #   photos = Unirest.get("https://pixabay.com/api/?key=#{ENV["PHOTOS_API_KEY"]}&q=#{search}&image_type=photo").body
+  # end
+
 end

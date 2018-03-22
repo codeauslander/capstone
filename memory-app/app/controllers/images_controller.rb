@@ -1,7 +1,7 @@
 class ImagesController < ApplicationController
 
   def index
-    @images = Image.all 
+    @images = Image.all
     render 'index.json.jbuilder'
   end
   def create
@@ -11,6 +11,7 @@ class ImagesController < ApplicationController
       )
     @image.save
     @image.add_tags(params[:tag_ids]) if params[:tag_ids]
+    puts "tag_id"+params[:tag_id]
     @image.add_tag(params[:tag_id]) if params[:tag_id]
     
     render 'show.json.jbuilder'

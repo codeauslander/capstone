@@ -127,9 +127,7 @@
   <div class="vue-component">
     <div class="row">
       <div class="col-2">
-        <div class="g-settings">
-          <button class="" v-on:click="isSettings()" v-if="settings">*</button>
-        </div>
+        
         <div class="play-form card">
           <div class="justify-content-center">
             <div class="container">
@@ -257,7 +255,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="card float-left" v-for="image in images">
+        <div class="card float-left images" v-for="image in images">
           <img v-bind:src="image.image_url" alt="">
           <p>{{image.name}}</p>
           <div class="container" v-for="tag in image.tags">
@@ -357,25 +355,37 @@
 <template id="about-page">
   <div class="vue-component">
     <div class="cotainer">
-      <!-- {{mediaWiki}} -->
-      <div class="row">
-        <div class="title">
-        <h1>Article title</h1>
+      <div class="pageOne">
+        <div class="container">
+          <h1>{{pageOne.title}}</h1>
+        </div>
+        <div class="container">
+          <p>
+            {{pageOne.text}}
+          </p>
+        </div>
+      </div>  
+      <div class="pageTwo">
+        <div class="container">
+          <h1>{{pageTwo.title}}</h1>
+        </div>
+        <div class="container">
+          <p>
+            {{pageTwo.text}}
+          </p>
+        </div>
       </div>
-      <div class="content">
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat illo, officiis facilis eveniet reprehenderit ducimus. Animi, eligendi, unde. Ratione alias cumque rem voluptas velit illum, fugiat mollitia, soluta nihil nobis!
-
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum temporibus deleniti distinctio a deserunt nisi laboriosam consequatur recusandae! Accusantium id explicabo necessitatibus beatae doloribus eaque ab tempora placeat. Aspernatur, beatae.
-
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae amet magni harum, odio, natus, obcaecati quasi ipsam architecto excepturi repudiandae temporibus aut? Soluta rem nulla maiores, praesentium autem sequi repellat!
-        </p>
-      </div>
-      
+      <div class="pageThree">
+        <div class="container">
+          <h1>{{pageThree.title}}</h1>
+        </div>
+        <div class="container">
+          <p>
+            {{pageThree.text}}
+          </p>
+        </div>
+      </div>     
     </div>
-      </div>
-      
-      
   </div>
 </template>
 

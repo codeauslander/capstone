@@ -26,7 +26,7 @@ var PlayPage = {
         }.bind(this)
       );
     } else {
-      this.amountImages = 4;
+      this.amountImages = 12;
       this.tagName = "real-ski-jumping";
 
       this.play();
@@ -353,6 +353,7 @@ var ImagesPage = {
       axios.get("/images").then(
         function(response) {
           this.images = response.data;
+          console.log(this.images.photos);
         }.bind(this)
       );
     },
@@ -472,17 +473,29 @@ var LogoutPage = {
 var AboutPage = {
   template: "#about-page",
   data: function() {
-    return { mediaWiki: "" };
+    return { pageOne: {}, pageTwo: {}, pageThree: {} };
   },
   created: function() {
-    this.getMediaWiki();
+    this.getPages();
   },
   methods: {
-    getMediaWiki: function() {
-      axios.get("/informations").then(
+    getPages: function() {
+      axios.get("/informations?search=" + "Alzheimer's disease").then(
         function(response) {
           console.log(response.data);
-          this.mediaWiki = response.data.summary;
+          this.pageOne = response.data;
+        }.bind(this)
+      );
+      axios.get("/informations?search=" + "Memory").then(
+        function(response) {
+          console.log(response.data);
+          this.pageTwo = response.data;
+        }.bind(this)
+      );
+      axios.get("informations?search=" + "Games").then(
+        function(response) {
+          console.log(response.data);
+          this.pageThree = response.data;
         }.bind(this)
       );
     }
