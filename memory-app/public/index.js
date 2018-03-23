@@ -6,8 +6,8 @@ var PlayPage = {
     return {
       game: "",
       board: [],
-      amountImages: 0,
-      tagName: "",
+      amountImages: "Size",
+      tagName: "Tag",
       tags: [],
       errors: [],
       settings: false
@@ -345,6 +345,7 @@ var ImagesPage = {
             console.log(response);
             this.newImageName = "";
             event.target.value = "";
+            this.images.push(response.data);
           }.bind(this)
         );
       }
@@ -354,6 +355,15 @@ var ImagesPage = {
         function(response) {
           this.images = response.data;
           console.log(this.images.photos);
+        }.bind(this)
+      );
+    },
+    deleteImage: function function_name(image) {
+      axios.delete("/images/" + image.id).then(
+        function(response) {
+          var indexImage = this.images.indexOf(image);
+          this.images.splice(indexImage, 1);
+          console.log(response.data);
         }.bind(this)
       );
     },
