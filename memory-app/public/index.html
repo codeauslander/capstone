@@ -206,8 +206,8 @@
       <div class="row justify-content-center" v-if="showNewTagForm">
           
           <input placeholder="name" v-model="newName">
-          <input  placeholder="1, 2, 3" v-model="newImageIds">
-          <button class="btn btn-success" v-on:click="createTag()">New Tag</button>
+          <!-- <input  placeholder="1, 2, 3" v-model="newImageIds"> -->
+          <button class="btn-success" v-on:click="createTag()"></button>
       </div>  
       <div class="row" v-for="tag in tags">
         <div class = "">
@@ -221,8 +221,8 @@
                 <input  placeholder="name" v-model="newImageName">
                 <button class="btn btn-success" v-on:click="createImageInTag(tag)">New Image in {{tag.name}} {{tag.imageUrl}}</button>
           </div> 
-          <div class="float-left" v-for="image in tag.images">
-            <div class="card " >
+          <div class="row" >
+            <div class="card " v-for="image in tag.images"  >
               <img class="card-img-top" v-bind:src="image.image_url" alt="Card image cap">
               <div class="card-block">
                 <h6 class="card-title">{{image.name}}
@@ -244,47 +244,55 @@
   </div>
 </template>
 
+
+
 <template id="images-page">
   <div class="vue-component">
-    <div class="container">
-      <h1>Images</h1>
-      <div class="form-image">
-        <div class="input-group mb-3">
-          <input placeholder="Image Name" type="text" v-model="newImageName">
-          <select   v-model="newImageTag" placeholder="Tag" class="custom-select"  >
-            <option v-for="tag in allTags" :value="tag" >{{tag.name}}</option>
-          </select>
-          <input value="B" type="file" v-on:change="uploadFile($event)">
+    <div class="container images">
+      <div class="row ">
+      <div class="col-10 justify-content-center">
+        <div class="row justify-content-center">
+          <h2>Images</h2>
+          <button v-on:click="newImageForm()" class="float-right btn-success"></button>  
         </div>
-      </div>
-      <div class="row">
-        <div class="card float-left images" v-for="image in images">
-          <img v-bind:src="image.image_url" alt="">
-          <span>
-            <p>{{image.name}}</p>
-            <button class="" v-on:click="deleteImage(image)">-</button>
-          </span>
-          
-
-          <div class="container" v-for="tag in image.tags">
-            <button v-on:click="deleteTagFromImage(image,tag)">-</button>
-            <p>{{tag.name}}</p>
+        <div class="form-image" v-if="showNewImageForm">
+          <div class="input-group mb-3">
+            <input placeholder="Image Name" type="text" v-model="newImageName">
+            <select   v-model="newImageTag" placeholder="Tag" class="custom-select"  >
+              <option v-for="tag in allTags" :value="tag" >{{tag.name}}</option>
+            </select>
+            <input value="B" type="file" v-on:change="uploadFile($event)">
           </div>
-          <div class="add-tag-form">
-            <div class="input-group-btn" >
-              <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
-                +Tag
-              </button>
-              <div >
-                <div class="dropdown-menu" >
-                  <a class="dropdown-item" v-for="newTag in allTags" :key="newTag.id" v-on:click="addTag(image,newTag)">{{newTag.name}}</a>
-                </div>
+        </div>
+        <div class="row">
+          <div class="card  images" v-for="image in images">
+              <img v-bind:src="image.image_url" alt="">
+              <span>
+                <p>{{image.name}}</p>
+                <button class="btn-danger" v-on:click="deleteImage(image)"></button>
+              </span>
+              <div class="container" v-for="tag in image.tags">
+                <button class="btn-danger" v-on:click="deleteTagFromImage(image,tag)">-</button>
+                <p>{{tag.name}}</p>
               </div>
-              
-            </div>       
+              <div class="add-tag-form">
+                <div class="input-group-btn" >
+                  <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+                    +Tag
+                  </button>
+                  <div >
+                    <div class="dropdown-menu" >
+                      <a class="dropdown-item" v-for="newTag in allTags" :key="newTag.id" v-on:click="addTag(image,newTag)">{{newTag.name}}</a>
+                    </div>
+                  </div>
+                </div>       
+              </div>
           </div>
         </div>
       </div>
+      
+      </div>
+      
     </div>
   </div>
 </template>

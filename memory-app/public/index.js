@@ -327,10 +327,14 @@ var ImagesPage = {
       images: [],
       allTags: [],
       newImageName: "",
-      newImageTag: ""
+      newImageTag: "",
+      showNewImageForm: false
     };
   },
   methods: {
+    newImageForm: function() {
+      this.showNewImageForm = !this.showNewImageForm;
+    },
     uploadFile: function(event) {
       if (event.target.files.length > 0) {
         console.log(this.newImageTag.id);

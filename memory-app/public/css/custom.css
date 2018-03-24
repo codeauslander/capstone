@@ -1,10 +1,18 @@
 /* your styles go here */
 
-body .tags .btn-danger,
-.btn-success {
+.tags .btn-danger,
+.tags .btn-success,
+.images .btn-danger,
+.images .btn-success {
   height: 20px;
   width: 20px;
   border-radius: 50%;
+}
+.tags .card,
+.images .card {
+  background-color: #eeedf3;
+  margin: 4px;
+  border-color: black;
 }
 .vue-component {
   padding: 10px;
@@ -34,7 +42,7 @@ header nav .brand {
 }
 
 body .images {
-  margin: 6px;
+  /*margin: 6px;*/
 }
 
 body .g-main-footer {
