@@ -243,7 +243,9 @@ var TagsPage = {
       newImageUrl: "",
       showNewImageForm: false,
 
-      tags: []
+      tags: [],
+      sortAttribute: "name",
+      sortAccending: true
     };
   },
   created: function() {
@@ -315,9 +317,34 @@ var TagsPage = {
           console.log(response.data);
         }.bind(this)
       );
+    },
+    setSortAttribute: function(attribute) {
+      if (attribute === this.sortAttribute) {
+        this.sortAccending = !this.sortAccending;
+        console.log(this.sortAccending);
+      } else {
+        this.sortAccending = true;
+      }
+      this.sortAttribute = attribute;
     }
   },
-  computed: {}
+  computed: {
+    sortedTags: function() {
+      return this.tags.sort(
+        function(tag1, tag2) {
+          if (this.sortAccending) {
+            return tag1[this.sortAttribute].localeCompare(
+              tag2[this.sortAttribute]
+            );
+          } else {
+            return tag2[this.sortAttribute].localeCompare(
+              tag1[this.sortAttribute]
+            );
+          }
+        }.bind(this)
+      );
+    }
+  }
 };
 
 var ImagesPage = {
@@ -328,10 +355,17 @@ var ImagesPage = {
       allTags: [],
       newImageName: "",
       newImageTag: "",
-      showNewImageForm: false
+      showNewImageForm: false,
+      nameImageFilter: ""
     };
   },
   methods: {
+    isValidImage: function(image) {
+      var validName = image.name
+        .toLowerCase()
+        .includes(this.nameImageFilter.toLowerCase());
+      return validName;
+    },
     newImageForm: function() {
       this.showNewImageForm = !this.showNewImageForm;
     },

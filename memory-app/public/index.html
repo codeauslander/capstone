@@ -197,25 +197,20 @@
       <div class="row justify-content-center">
         <h2 class="">[ Tags ]
         </h2>
-        <button v-on:click="newTagForm()" class="float-right btn-success"></button>    
+        <button v-on:click="newTagForm()" class="float-right btn-success"></button>  
+        <button class='btn-info ' v-on:click="setSortAttribute('name')"></button>  
       </div>
       <div class="row justify-content-center" v-if="showNewTagForm"> 
           <input placeholder="name" v-model="newName">
           <!-- <input  placeholder="1, 2, 3" v-model="newImageIds"> -->
           <button class="btn-success" v-on:click="createTag()"></button>
       </div>  
-      <div class="row" v-for="tag in tags">
+      <div class="row" v-for="tag in sortedTags">
         <div class = "">
           <div class="row">
-            <button v-on:click="deleteTag(tag)" class="float-left btn-danger"></button>  
             <h2> {{tag.name}} </h2>
-            <button v-on:click="newImageForm()" class="float-left btn-success"></button>
+            <button v-on:click="deleteTag(tag)" class="float-left btn-danger"></button>  
           </div>
-          <div class="row" v-if="showNewImageForm">
-                <input placeholder="url" v-model="newImageUrl">
-                <input  placeholder="name" v-model="newImageName">
-                <button class="btn btn-success" v-on:click="createImageInTag(tag)">New Image in {{tag.name}} {{tag.imageUrl}}</button>
-          </div> 
           <div class="row" >
             <div class="card " v-for="image in tag.images"  >
               <img class="card-img-top" v-bind:src="image.image_url" alt="Card image cap">
@@ -238,14 +233,16 @@
     <div class="container images">
       <div class="row justify-content-center">
         <div class="col-10  ">
-          <div class="row ">
+          <div class="row " style="margin-bottom: 10px ">
             <h2>Images</h2>
-            <button v-on:click="newImageForm()" class="float-right btn-success"></button>  
+            <button v-on:click="newImageForm()" class=" btn-success"></button> 
+            <input class="offset-md-6" type="text" placeholder="filter by name" v-model="nameImageFilter"> 
           </div>
           <div class="form-image" v-if="showNewImageForm">
             <div class="input-group mb-3">
               <input placeholder="Image Name" type="text" v-model="newImageName">
               <select   v-model="newImageTag" placeholder="Tag" class="custom-select"  >
+                <option value="">tags</option>
                 <option v-for="tag in allTags" :value="tag" >{{tag.name}}</option>
               </select>
               <input value="B" type="file" v-on:change="uploadFile($event)">
@@ -253,10 +250,11 @@
           </div>
           <div class="row ">
             <div class="card  images" v-for="image in images">
-                <div class="float-left">
-                  <div>
-                    <button class="btn-danger" v-on:click="deleteImage(image)"></button>
-                    {{image.name}}
+              <div v-if="isValidImage(image)">
+                <div class="">
+                  <div class="">
+                    <button class="float-left btn-danger" v-on:click="deleteImage(image)"></button>
+                    <h6>{{image.name}}</h6>
                     
                   </div>   
                 </div>
@@ -278,7 +276,8 @@
                       </div>
                     </div>
                   </div>       
-                </div>
+                </div> 
+              </div>
             </div>
           </div>
         </div>
