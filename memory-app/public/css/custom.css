@@ -1,5 +1,18 @@
 /* your styles go here */
+.winner {
+  margin-top: 100px;
+}
 
+.winner-box {
+  padding: 10px;
+  background: yellow;
+  border-style: solid;
+  border-color: black;
+}
+
+.winner-box h1 {
+  font-size: 200px;
+}
 .tags .btn-danger,
 .tags .btn-success,
 .images .btn-danger,
@@ -13,6 +26,14 @@
   background-color: #eeedf3;
   margin: 4px;
   border-color: black;
+}
+
+.pageOne .container,
+.pageTwo .container,
+.pageThree .container {
+  background-color: white;
+  border-radius: 2%;
+  margin-bottom: 5px;
 }
 .vue-component {
   padding: 10px;
@@ -118,3 +139,5 @@ body .g-card .flipped {
   -o-transform: rotateY(180deg);
   transform: rotateY(180deg);
 }
+
+/* Winner message*/

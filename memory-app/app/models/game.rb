@@ -3,10 +3,7 @@ class Game < ApplicationRecord
   has_many :game_images
   has_many :images, through: :game_images
 
-
-
   def update_flipped
-
     flip_images = game_images.where(status:"flipped")
     if flip_images.length == 1
       game_images.where(status:"viewed").update_all(status:"normal")
@@ -18,7 +15,6 @@ class Game < ApplicationRecord
         flip_images.update_all(status:"viewed")
       end
     end
-    
     self.done = is_winner
     self.score = game_images.where(status:"ok").count
     return true

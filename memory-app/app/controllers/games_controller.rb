@@ -2,17 +2,14 @@ class GamesController < ApplicationController
   before_action :authenticate_user, only: [:index]
 
   def index
-    @games = current_user.games.last(11)
+    @games = current_user.games
     render json: @games.as_json
   end
   def create
-
     amount_images_total = (params[:amount_images] == nil) || (params[:amount_images] == "") ? 2 : (params[:amount_images].to_i * 2)
     rows = multiples(amount_images_total)[:rows]
     columns = multiples(amount_images_total)[:columns]
-    
     @game = Game.create(
-         
         done: false, 
         rows:rows, 
         columns:columns,
@@ -20,33 +17,32 @@ class GamesController < ApplicationController
       )
     if current_user
       @game.user_id = current_user.id 
+      @game.save
     end
-    
 
     tag_name = params["tag_name"]
     p tag_name
     tag = Tag.find_by(name:tag_name)
-    
     images = tag.images
     random_images_ids = images.map{|image|image.id}.shuffle!
-
     game_images_hashes = []
     2.times do 
       (amount_images_total/2).times do |index|
         game_images_hashes << {status: "normal", image_id: random_images_ids[index], game_id: @game.id}
       end
     end
-
     game_images_hashes.shuffle!
     game_images_hashes.each do |game_image_hash|
       GameImage.create(game_image_hash)
     end
-    
+
     render 'show.json.jbuilder'
   end
+
   def show
     @game = Game.find(params[:id])
     @game.update_flipped
+    puts current_user
     @game.save
     render 'show.json.jbuilder'
   end
