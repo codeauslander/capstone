@@ -33,11 +33,37 @@
 .pageOne .container,
 .pageTwo .container,
 .pageThree .container {
-  background-color: white;
+  /*background-color: white;*/
+
   border-radius: 2%;
+  margin-top: 30px;
   margin-bottom: 5px;
+
+  /*height: 400px;*/
 }
-.vue-component {
+
+.pageOne .subMenu,
+.pageTwo .subMenu,
+.pageThree .subMenu {
+  border-radius: 50%;
+  width: 400px;
+  padding: 5px;
+  margin-top: 20px;
+  margin-left: 10px;
+  background: rgba(76, 175, 80, 0.4);
+}
+
+.pageOne .container {
+  background-color: #09fe7c;
+}
+.pageTwo .container {
+  background-color: #fef965;
+}
+.pageThree .container {
+  background-color: #fa9cf7;
+}
+
+.pageTwiek .vue-component {
   padding: 10px;
 }
 nav {

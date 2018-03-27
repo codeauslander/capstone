@@ -198,7 +198,7 @@
         <h2 class="">[ Tags ]
         </h2>
         <button v-on:click="newTagForm()" class="float-right btn-success"></button>  
-        <button class='btn-info ' v-on:click="setSortAttribute('name')"></button>  
+        <button class='btn-info' v-on:click="setSortAttribute('name')"></button>  
       </div>
       <div class="row justify-content-center" v-if="showNewTagForm"> 
           <input placeholder="name" v-model="newName">
@@ -370,31 +370,59 @@
 <template id="about-page">
   <div class="vue-component">
     <div class="cotainer">
-      <div class="pageOne">
-        <div class="container">
-          <h1>{{pageOne.title}}</h1> 
-          <p>
-            {{pageOne.text}}
-          </p>
+      <div class="row"> 
+        <div class="pageOne col-4">
+            <a class="subMenu" type="button" data-toggle="collapse" data-target="#multiCollapsePageOne" aria-expanded="false" aria-controls="multiCollapsePageOne">
+              <h2>
+                {{pageOne.title}}
+              </h2>
+            </a>
+            <div class="container">
+              <div class="collapse multi-collapse" id="multiCollapsePageOne">
+                <div class="card card-body">
+                  <p>
+                    {{pageOne.text}}
+                  </p>
+                </div>
+              </div>
+            </div>  
         </div>
-      </div>  
-      <div class="pageTwo">
-        <div class="container">
-          <h1>{{pageTwo.title}}</h1>
-          <p>
-            {{pageTwo.text}}
-          </p>
-        </div>
+        <div class="pageTwo col-4">
+          <a class="subMenu" type="button" data-toggle="collapse" data-target="#miltiCollapsePageTwo" aria-expanded="false" aria-controls="miltiCollapsePageTwo">
+            <h2>
+              {{pageTwo.title}}
+            </h2>
+          </a>
+          <div class="container">
+            <div class="collapse multi-collapse" id="miltiCollapsePageTwo">
+                <div class="card card-body">
+                  <p>
+                    {{pageTwo.text}}
+                  </p>
+                </div>
+            </div>
+          </div>
+        </div> 
+
+        <div class="pageThree col-4">
+          <a class="subMenu" type="button" data-toggle="collapse" data-target="#miltiCollapsePageThree" aria-expanded="false" aria-controls="miltiCollapsePageThree">
+            <h2>
+              {{pageThree.title}}
+            </h2>
+          </a>
+          <div class="container">
+            <div class="collapse multi-collapse" id="miltiCollapsePageThree">
+                <div class="card card-body">
+                  <p>
+                    {{pageThree.text}}
+                  </p>
+                </div>
+            </div>
+          </div>
+        </div> 
+
       </div>
-      <div class="pageThree">
-        <div class="container">
-          <h1>{{pageThree.title}}</h1>
-          <p>
-            {{pageThree.text}}
-          </p>
-        </div>
-      </div>     
-    </div>
+    </div>           
   </div>
 </template>
 
