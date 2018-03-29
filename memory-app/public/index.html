@@ -213,13 +213,18 @@
             <button v-on:click="deleteTag(tag)" class="float-left btn-danger"></button>  
           </div>
           <div class="row" >
-            <div class="card " v-for="image in tag.images"  >
-              <img class="card-img-top" v-bind:src="image.image_url" alt="Card image cap">
-              <div class="card-block">
-                <div class="card-title">
-                  {{image.name}}
-                  <button v-on:click="deleteImageFromTag(tag,image)" class="btn-danger"></button>
-                </div>   
+            <div class="images" v-for="image in tag.images">
+              <div class="card"   >
+                
+                <div class="card-block">
+                  <div class="card-title" >
+                    <h4 style="background-color: white; border: solid; border-color: black;">
+                    <button v-on:click="deleteImageFromTag(tag,image)" class="btn-danger"></button>{{image.name}}</h4>
+                    
+                    
+                    <img class="card-img-top" v-bind:src="image.image_url" alt="Card image cap">
+                  </div>   
+                </div>
               </div>
             </div>
           </div>
@@ -250,34 +255,37 @@
             </div>
           </div>
           <div class="row ">
-            <div class="card  images" v-for="image in images">
-              <div v-if="isValidImage(image)">
+            <div class="images" v-for="image in images">
+              <div class="card" v-if="isValidImage(image)">
                 <div class="">
-                  <div class="">
+                  <div class="" style="background-color: white; border-radius: 10%;">
                     <button class="float-left btn-danger" v-on:click="deleteImage(image)"></button>
-                    <h6>{{image.name}}</h6>
+                    <h4 style="margin-bottom: 0px;">{{image.name}}</h4>
                     
                   </div>   
                 </div>
                 <img v-bind:src="image.image_url" alt="">
-                <div class="container" v-for="tag in image.tags">
+                <div class="container" v-for="tag in image.tags" style="border: 1px; border-style: solid; border-color: black;">
                   <div>
-                    {{tag.name}}
                     <button class="btn-danger float-rigth" v-on:click="deleteTagFromImage(image,tag)"></button>
+                    {{tag.name}}
+                    
                   </div>
                 </div>
-                <div class="add-tag-form">
-                  <div class="input-group-btn" >
-                    <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
-                      +Tag
-                    </button>
-                    <div >
-                      <div class="dropdown-menu" >
-                        <a class="dropdown-item" v-for="newTag in allTags" :key="newTag.id" v-on:click="addTag(image,newTag)">{{newTag.name}}</a>
+                <div class="float-rigth">
+                  <div class="add-tag-form">
+                    <div class="input-group-btn" >
+                      <button type="button" class=" btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+                        Tag
+                      </button>
+                      <div >
+                        <div class="dropdown-menu" >
+                          <a class="dropdown-item" v-for="newTag in allTags" :key="newTag.id" v-on:click="addTag(image,newTag)">{{newTag.name}}</a>
+                        </div>
                       </div>
-                    </div>
-                  </div>       
-                </div> 
+                    </div>       
+                  </div> 
+                </div>
               </div>
             </div>
           </div>
